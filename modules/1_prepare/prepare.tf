@@ -28,10 +28,15 @@ resource "libvirt_pool" "storage_pool" {
     path        = "${var.images_path}/${var.cluster_id}"
 }
 
+resource "random_integer" "no" {
+    min     = 10
+    max     = 9999
+}
+
 resource "libvirt_network" "network" {
     name        = var.cluster_id
     mode        = "nat"
-    bridge      = "virbr99"
+    bridge      = "virbr${random_integer.no.result}"
     domain      = "${var.cluster_id}.${var.cluster_domain}"
     addresses   = [var.network_cidr]
     autostart   = true
