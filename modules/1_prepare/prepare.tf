@@ -40,6 +40,9 @@ resource "libvirt_network" "network" {
     domain      = "${var.cluster_id}.${var.cluster_domain}"
     addresses   = [var.network_cidr]
     autostart   = true
+    dhcp {
+        enabled = false
+    }
     dns {
         local_only = true
         forwarders {

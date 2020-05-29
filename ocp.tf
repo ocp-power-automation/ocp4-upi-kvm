@@ -66,19 +66,24 @@ module "nodes" {
 }
 
 module "install" {
-    source                          = "./modules/6_install"
+    source                          = "github.com/ppc64le/ocp4_upi_powervm//modules/5_install"
 
     cluster_domain                  = var.cluster_domain
     cluster_id                      = "${random_id.label.hex}"
     dns_forwarders                  = var.dns_forwarders
+    gateway_ip                      = cidrhost(var.network_cidr,1)
+    cidr                            = var.network_cidr
+    allocation_pools                = [{"start": cidrhost(var.network_cidr,3), "end": cidrhost(var.network_cidr,-2)}]
     bastion_ip                      = module.prepare.bastion_ip
     rhel_username                   = var.rhel_username
     private_key                     = local.private_key
     ssh_agent                       = var.ssh_agent
-    host_address                    = var.host_address
     bootstrap_ip                    = module.nodes.bootstrap_ip
     master_ips                      = module.nodes.master_ips
     worker_ips                      = module.nodes.worker_ips
+    bootstrap_mac                   = module.nodes.bootstrap_mac
+    master_macs                     = module.nodes.master_macs
+    worker_macs                     = module.nodes.worker_macs
     public_key                      = local.public_key
     pull_secret                     = file(coalesce(var.pull_secret_file, "/dev/null"))
     openshift_install_tarball       = var.openshift_install_tarball

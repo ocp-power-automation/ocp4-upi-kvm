@@ -157,8 +157,6 @@ resource "libvirt_domain" "bootstrap" {
     network_interface {
         network_id  = var.network_id
         hostname    = "bootstrap.${var.cluster_id}.${var.cluster_domain}"
-        addresses   = [local.bootstrap_ip]
-        wait_for_lease  = true
     }
 }
 
@@ -183,8 +181,6 @@ resource "libvirt_domain" "master" {
     network_interface {
         network_id  = var.network_id
         hostname    = "master-${count.index}.${var.cluster_id}.${var.cluster_domain}"
-        addresses   = [cidrhost(var.network_cidr, local.first_master_ip + count.index)]
-        wait_for_lease  = true
     }
 }
 
@@ -209,7 +205,19 @@ resource "libvirt_domain" "worker" {
     network_interface {
         network_id  = var.network_id
         hostname    = "worker-${count.index}.${var.cluster_id}.${var.cluster_domain}"
-        addresses   = [cidrhost(var.network_cidr, local.first_worker_ip + count.index)]
-        wait_for_lease  = true
+    }
+}
+
+resource "null_resource" "master_ip" {
+    count       = var.master["count"]
+    triggers    = {
+        address = cidrhost(var.network_cidr, local.first_master_ip + count.index)
+    }
+}
+
+resource "null_resource" "worker_ip" {
+    count       = var.worker["count"]
+    triggers    = {
+        address = cidrhost(var.network_cidr, local.first_worker_ip + count.index)
     }
 }

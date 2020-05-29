@@ -19,13 +19,25 @@
 ################################################################
 
 output "bootstrap_ip" {
-    value = libvirt_domain.bootstrap.network_interface[0].addresses[0]
+    value = local.bootstrap_ip
 }
 
 output "master_ips" {
-    value = flatten(flatten(libvirt_domain.master.*.network_interface).*.addresses)
+    value = null_resource.master_ip.*.triggers.address
 }
 
 output "worker_ips" {
-    value = flatten(flatten(libvirt_domain.worker.*.network_interface).*.addresses)
+    value = null_resource.worker_ip.*.triggers.address
+}
+
+output "bootstrap_mac" {
+    value = libvirt_domain.bootstrap.network_interface[0].mac
+}
+
+output "master_macs" {
+    value = flatten(flatten(libvirt_domain.master.*.network_interface).*.mac)
+}
+
+output "worker_macs" {
+    value = flatten(flatten(libvirt_domain.worker.*.network_interface).*.mac)
 }
