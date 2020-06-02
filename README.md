@@ -1,7 +1,7 @@
-# Terraform for OpenShift 4.X on PowerKVM
-This repo contains Terraform templates required to deploy OCP 4.X on PowerKVM using libvirt. Terraform resources are implemented by refering to https://github.com/openshift/installer/blob/master/docs/user/openstack/install_upi.md.
+# Terraform for OpenShift 4.X on KVM
+This repo contains Terraform templates required to deploy OCP 4.X on KVM using libvirt. Terraform resources are implemented by refering to https://github.com/openshift/installer/blob/master/docs/user/openstack/install_upi.md.
 
-Please ensure you have installed and enabled libvirt on the PowerKVM host. Enable IP forwarding and configure libvirt to accept TCP connections for remote installations. Also, check if firewall rules allow remote connections to the host.
+Please ensure you have installed and enabled libvirt on the KVM host. Enable IP forwarding and configure libvirt to accept TCP connections for remote installations. Also, check if firewall rules allow remote connections to the host.
 
 This repo uses Ansible playbooks for the installation steps which are executed by the Terraform module. No need to run the playbooks manually.
 
