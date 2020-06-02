@@ -80,17 +80,18 @@ variable "worker" {
 }
 
 variable "network_cidr" {
-    default = "192.168.27.0/24"
+    description = "Network subnet range for the cluster nodes"
+    default     = "192.168.27.0/24"
 }
 
 variable "rhel_username" {
-    default = "root"
+    default     = "root"
 }
 
 # This will be used only at the beginning, subsequent logins will be done using the SSH keys.
 variable "rhel_password" {
     description = "Password to login to bastion node, leave empty if SSH key is already setup in the image"
-    default = "123456"
+    default     = "123456"
 }
 
 variable "public_key_file" {
@@ -143,7 +144,7 @@ variable "installer_log_level" {
 variable "helpernode_tag" {
     description = "Set the branch/tag name or commit# for using ocp4-helpernode repo"
     # Checkout level for https://github.com/RedHatOfficial/ocp4-helpernode which is used for setting up services required on bastion node
-    default = "d6ad30574619ae6427cad9662fe3a4a896a9af11"
+    default = "fddbbc651153ef2966e5cb4d4167990b31c01ceb"
 }
 
 variable "ansible_extra_options" {
@@ -167,7 +168,7 @@ variable "openshift_install_tarball" {
 }
 
 variable "openshift_client_tarball" {
-     default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/4.3.18/openshift-client-linux.tar.gz"
+    default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/4.3.18/openshift-client-linux.tar.gz"
 }
 
 variable "release_image_override" {
@@ -175,21 +176,21 @@ variable "release_image_override" {
 }
 
 variable "pull_secret_file" {
-    default   = "data/pull-secret.txt"
+    default = "data/pull-secret.txt"
 }
 
 # Must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
 variable "cluster_domain" {
-    default   = "rhocp.com"
+    default = "example.com"
 }
 # Must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
 # Should not be more than 14 characters
 variable "cluster_id_prefix" {
-    default   = "test-ocp"
+    default = "test"
 }
 
 variable "dns_forwarders" {
-    default   = "8.8.8.8; 8.8.4.4"
+    default = "8.8.8.8; 8.8.4.4"
 }
 
 variable "storage_type" {
@@ -197,19 +198,8 @@ variable "storage_type" {
     default = "none"
 }
 
-/* TODO: Storage not tested yet
-variable "storage_type" {
-    #Supported values: nfs (other value won't setup a storageclass)
-    default = "nfs"
-}
-
-variable "storageclass_name" {
-    default = "managed-nfs-storage"
-}
-
 variable "volume_size" {
     # If storage_type = nfs, a new volume of this size will be attached to the bastion node.
     # Value in GB
     default = "300"
 }
-*/

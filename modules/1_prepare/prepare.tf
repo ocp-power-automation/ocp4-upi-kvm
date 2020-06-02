@@ -58,6 +58,13 @@ resource "libvirt_volume" "bastion" {
     pool        = libvirt_pool.storage_pool.name
 }
 
+resource "libvirt_volume" "storage" {
+    count       = var.storage_type == "nfs" ? 1 : 0
+    name        = "${var.cluster_id}-storage-vol"
+    size        = var.volume_size * 1024 * 1024 * 1024  # Value in GB
+    pool        = libvirt_pool.storage_pool.name
+}
+
 resource "libvirt_domain" "bastion" {
     name        = "${var.cluster_id}-bastion"
     memory      = var.bastion.memory
@@ -66,13 +73,23 @@ resource "libvirt_domain" "bastion" {
     disk {
         volume_id = libvirt_volume.bastion.id
     }
+
+    dynamic "disk" {
+        for_each = libvirt_volume.storage.*
+        content {
+            volume_id = disk.value["id"]
+        }
+    }
+
     console {
         type        = "pty"
         target_port = 0
     }
+
     cpu = {
         mode = "host-passthrough"
     }
+
     network_interface {
         network_id  = libvirt_network.network.id
         hostname    = "${var.cluster_id}-bastion.${var.cluster_domain}"
@@ -143,6 +160,39 @@ EOF
     provisioner "remote-exec" {
         inline = [
             "sudo pip3 install ansible -q"
+        ]
+    }
+}
+
+locals {
+    disk_config = {
+        volume_size = var.volume_size
+    }
+    storage_path = "/export"
+}
+
+resource "null_resource" "setup_nfs_disk" {
+    depends_on  = [null_resource.bastion_init]
+    count       = var.storage_type == "nfs" ? 1 : 0
+    connection {
+        type        = "ssh"
+        host        = local.bastion_ip
+        user        = var.rhel_username
+        private_key = var.private_key
+        password    = var.rhel_password
+        agent       = var.ssh_agent
+        timeout     = "15m"
+        bastion_host = var.host_address
+    }
+    provisioner "file" {
+        content     = templatefile("${path.module}/templates/find_disk.sh", local.disk_config)
+        destination = "/tmp/find_disk.sh"
+    }
+    provisioner "remote-exec" {
+        inline = [
+            "rm -rf mkdir ${local.storage_path}; mkdir -p ${local.storage_path}; chmod -R 755 ${local.storage_path}",
+            "sudo chmod +x /tmp/find_disk.sh",
+            "disk_name=$(/tmp/find_disk.sh); sudo mkfs.ext4 -F $disk_name; sudo mount $disk_name ${local.storage_path}",
         ]
     }
 }

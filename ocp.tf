@@ -48,6 +48,8 @@ module "prepare" {
     images_path                     = var.images_path
     rhel_subscription_username      = var.rhel_subscription_username
     rhel_subscription_password      = var.rhel_subscription_password
+    storage_type                    = var.storage_type
+    volume_size                     = var.volume_size
 }
 
 module "nodes" {
@@ -66,7 +68,7 @@ module "nodes" {
 }
 
 module "install" {
-    source                          = "github.com/ppc64le/ocp4_upi_powervm//modules/5_install"
+    source                          = "./modules/5_install"
 
     cluster_domain                  = var.cluster_domain
     cluster_id                      = "${random_id.label.hex}"
@@ -78,6 +80,7 @@ module "install" {
     rhel_username                   = var.rhel_username
     private_key                     = local.private_key
     ssh_agent                       = var.ssh_agent
+    jump_host                       = var.host_address
     bootstrap_ip                    = module.nodes.bootstrap_ip
     master_ips                      = module.nodes.master_ips
     worker_ips                      = module.nodes.worker_ips
@@ -94,21 +97,3 @@ module "install" {
     log_level                       = var.installer_log_level
     ansible_extra_options           = var.ansible_extra_options
 }
-
-/* TODO: Storage not tested yet
-module "storage" {
-    source                          = "./modules/7_storage"
-
-    install_status                  = module.install.install_status
-    cluster_id                      = "${random_id.label.hex}"
-    bastion_ip                      = module.bastion.bastion_ip
-    bastion_id                      = module.bastion.bastion_id
-    storage_type                    = var.storage_type
-    storageclass_name               = var.storageclass_name
-    volume_size                     = var.volume_size
-    volume_storage_template         = var.volume_storage_template
-    rhel_username                   = var.rhel_username
-    private_key                     = local.private_key
-    ssh_agent                       = var.ssh_agent
-}
-*/

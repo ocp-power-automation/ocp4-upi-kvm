@@ -25,27 +25,38 @@ variable "cluster_id" {
   default   = "test-ocp"
 }
 
-variable "bastion" {
-    # only one node is supported
-    default = {
-        memory  = 4096
-        vcpu    = 2
-    }
+variable "dns_forwarders" {
+    default   = "8.8.8.8; 9.9.9.9"
 }
-variable "bastion_image" { default   = "file:///home/libvirt/images/bastion.qcow2" }
+variable gateway_ip {}
+variable cidr {}
+variable allocation_pools {}
 
+variable "bastion_ip" {}
 variable "rhel_username" {}
-variable "rhel_password" {}
 variable "private_key" {}
-variable "public_key" {}
 variable "ssh_agent" {}
-variable "host_address" {}
+variable "jump_host" { default = "" }
 
-variable "network_cidr" {}
-variable "images_path" { default = "/home/libvirt/openshift/images" }
+variable "bootstrap_ip" {}
+variable "master_ips" {}
+variable "worker_ips" {}
 
-variable "rhel_subscription_username" {}
-variable "rhel_subscription_password" {}
+variable bootstrap_mac {}
+variable master_macs {}
+variable worker_macs {}
+
+variable "openshift_client_tarball" {}
+variable "openshift_install_tarball" {}
+
+variable "public_key" {}
+variable "pull_secret" {}
+variable "release_image_override" {}
+
+variable helpernode_tag { default = "master" }
 
 variable "storage_type" {}
-variable "volume_size" {}
+variable "log_level" {}
+
+variable "ansible_extra_options" {}
+
