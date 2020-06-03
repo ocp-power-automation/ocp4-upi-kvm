@@ -118,23 +118,23 @@ resource "null_resource" "install" {
 
     provisioner "remote-exec" {
         inline = [
-            "rm -rf ocp4_upi_powervm",
-            "echo 'Cloning into ocp4_upi_powervm...'",
-            "git clone https://github.com/ppc64le/ocp4_upi_powervm --quiet"
+            "rm -rf ocp4-playbooks",
+            "echo 'Cloning into ocp4-playbooks...'",
+            "git clone https://github.com/ocp-power-automation/ocp4-playbooks --quiet",
         ]
     }
     provisioner "file" {
         content     = templatefile("${path.module}/templates/inventory", local.inventory)
-        destination = "~/ocp4_upi_powervm/ansible/inventory"
+        destination = "~/ocp4-playbooks/inventory"
     }
     provisioner "file" {
         content     = templatefile("${path.module}/templates/install_vars.yaml", local.install_vars)
-        destination = "~/ocp4_upi_powervm/ansible/install_vars.yaml"
+        destination = "~/ocp4-playbooks/install_vars.yaml"
     }
     provisioner "remote-exec" {
         inline = [
             "echo 'Running ocp install playbook...'",
-            "cd ocp4_upi_powervm/ansible && ansible-playbook  -i inventory -e @install_vars.yaml playbooks/install.yaml ${var.ansible_extra_options}"
+            "cd ocp4-playbooks && ansible-playbook -i inventory -e @install_vars.yaml playbooks/install.yaml ${var.ansible_extra_options}"
         ]
     }
 }
