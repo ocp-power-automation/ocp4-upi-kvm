@@ -31,7 +31,7 @@ output "worker_ips" {
 }
 
 output "bootstrap_mac" {
-    value = libvirt_domain.bootstrap.network_interface[0].mac
+    value = "${join("", flatten(libvirt_domain.bootstrap.*.network_interface).*.mac)}"
 }
 
 output "master_macs" {

@@ -24,6 +24,7 @@ variable "cluster_id" {}
 variable "bootstrap" {
     # only one node is supported
     default = {
+        count   = 1
         memory  = 8192
         vcpu    = 4
     }

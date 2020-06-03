@@ -149,6 +149,18 @@ fi
 EOF
         ]
     }
+    provisioner "remote-exec" {
+        when        = destroy
+        on_failure  = continue
+        inline = [<<EOF
+if [ '${var.rhel_subscription_username}' != '' ]
+then
+    sudo subscription-manager unregister
+    sudo subscription-manager remove --all
+fi
+EOF
+        ]
+    }
 
     provisioner "remote-exec" {
         inline = [

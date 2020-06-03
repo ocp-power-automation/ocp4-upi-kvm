@@ -20,10 +20,10 @@ Please follow above link to download and install Terraform on your machine. Here
 
 CoreOS images for Power can be downloaded from [here](https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/).
 Following are the recommended LPAR configs for OpenShift nodes
-- Bootstrap, Master - 2 vCPUs, 16GB RAM, 120 GB Disk
+- Bootstrap, Master - 4 vCPUs, 16GB RAM, 120 GB Disk
 
    **_This config is suitable for majority of the scenarios_**
-- Worker - 2 vCPUs, 16GB RAM, 120 GB Disk
+- Worker - 4 vCPUs, 16GB RAM, 120 GB Disk
 
    **_Increase worker vCPUs, RAM and Disk based on application requirements_**
 
@@ -40,18 +40,19 @@ Edit the var.tfvars file with following values:
  * `bastion_image` :  Path to RHEL image, local(machine running the terraform) or remote using HTTP(S) url.
  * `rhcos_image` : Path to RHCOS image, local(machine running the terraform) or remote using HTTP(S) url.
  * `bastion` : Map of below parameters for bastion host.
-    * `memory` : Memory numbers required for bastion.
-    * `vcpu` : VCPUs numbers to use for bastion.
+    * `memory` : Memory in MBs required for bastion node.
+    * `vcpu` : Number of VCPUs to use for bastion.
  * `bootstrap` : Map of below parameters for bootstrap host.
-    * `memory` : Memory numbers required for bootstrap.
-    * `vcpu` : VCPUs numbers to use for bootstrap.
+    * `memory` : Memory in MBs required for bootstrap node.
+    * `vcpu` : Number of VCPUs to use for bootstrap node.
+    * `count` : Always set the value to 1 before starting the deployment. When the deployment is completed successfully set to 0 to delete the bootstrap node.
  * `master` : Map of below parameters for master hosts.
-    * `memory` : Memory numbers required for masters.
-    * `vcpu` : VCPUs numbers to use for masters.
+    * `memory` : Memory in MBs required for master nodes.
+    * `vcpu` : Number of VCPUs to use for master  nodes.
     * `count` : Number of master nodes.
  * `worker` : Map of below parameters for worker hosts. (Atleaset 2 Workers are required for running router pods)
-    * `memory` : Memory numbers required for workers.
-    * `vcpu` : VCPUs numbers to use for workers.
+    * `memory` : Memory in MBs required for worker nodes.
+    * `vcpu` : Number of VCPUs to use for worker nodes.
     * `count` : Number of worker nodes.
  * `network_cidr` : Network subnet range for the cluster. Ensure it is unique for each cluster on the same host.
  * `rhel_username` : The user that we should use for the connection to the bastion host.
@@ -85,9 +86,16 @@ On your Terraform client machine:
 
 Now wait for the installation to complete. It may take around 40 mins to complete provisioning.
 
+You will get an error if you have not installed 'terraform-provider-libvirt' plugin already. You will need to download and install the plugin on the Terraform terminal before running `terraform init`. For more information on how-to check [here](https://github.com/dmacvicar/terraform-provider-libvirt/blob/master/README.md).
+
 **IMPORTANT**: When using NFS storage, the OpenShift image registry will be using NFS PV claim. Otherwise the image registry uses ephemeral PV.
 
-You will get an error if you have not installed 'terraform-provider-libvirt' plugin already. You will need to download and install the plugin on the Terraform terminal before running `terraform init`. For more information on how-to check [here](https://github.com/dmacvicar/terraform-provider-libvirt/blob/master/README.md).
+**IMPORTANT**: Once the deployment is completed successfully, you can safely delete the bootstrap node. After this, the HAPROXY server will not point to the APIs from bootstrap node once the cluster is up and running. Clients will start consuming APIs from master nodes once the bootstrap node is deleted. Take backup of all the required files from bootstrap node (eg: logs) before running below steps.
+
+To delete the bootstrap node:
+1. Change the `count` value to 0 in `bootstrap` map variable and re-run the apply command. Eg: `bootstrap = { memory = 8192, vcpu = 4, count = 0 }`
+2. Run command `terraform apply -var-file var.tfvars`
+
 
 ## Create API and Ingress DNS Records
 You will also need to add the following records to your DNS:

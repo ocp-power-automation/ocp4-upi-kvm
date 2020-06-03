@@ -138,6 +138,7 @@ resource "libvirt_ignition" "worker" {
 
 # domains
 resource "libvirt_domain" "bootstrap" {
+    count   = var.bootstrap["count"] == 0 ? 0 : 1
     name    = "${var.cluster_id}-bootstrap"
     memory  = var.bootstrap.memory
     vcpu    = var.bootstrap.vcpu
