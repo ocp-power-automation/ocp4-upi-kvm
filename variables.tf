@@ -52,7 +52,7 @@ variable "rhcos_image" {
 variable "bastion" {
     # only one node is supported
     default = {
-        memory  = 4096
+        memory  = 8192
         vcpu    = 2
     }
 }
@@ -68,14 +68,14 @@ variable "bootstrap" {
 variable "master" {
     default = {
         count   = 3
-        memory  = 8192
+        memory  = 16384
         vcpu    = 4
     }
 }
 variable "worker" {
     default = {
         count   = 2
-        memory  = 8192
+        memory  = 16384
         vcpu    = 4
     }
 }

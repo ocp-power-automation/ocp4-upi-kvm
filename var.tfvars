@@ -6,10 +6,10 @@ images_path     = "/home/libvirt/openshift-images"
 ### Configure the Nodes details
 bastion_image   = "http://remote_server/rhel-8.1-ppc64le-kvm.qcow2"
 rhcos_image     = "http://remote_server/rhcos-4.4.0-0.nightly-ppc64le-2020-05-08-093850-qemu.ppc64le.qcow2"
-bastion         = { memory = 4096, vcpu = 2 }
+bastion         = { memory = 8192, vcpu = 2 }
 bootstrap       = { memory = 8192, vcpu = 4, count = 1 }
-master          = { memory = 8192, vcpu = 4, count = 3 }
-worker          = { memory = 8192, vcpu = 4, count = 2 }
+master          = { memory = 16384, vcpu = 4, count = 3 }
+worker          = { memory = 16384, vcpu = 4, count = 2 }
 network_cidr    = "192.168.88.0/24"
 rhel_username   = "root"
 rhel_password   = "123456"
