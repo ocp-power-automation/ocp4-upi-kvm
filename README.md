@@ -70,6 +70,7 @@ Edit the var.tfvars file with following values:
  * `installer_log_level` : enable log level for openshift-install (e.g. "debug | info | warn | error") (default "info")
  * `ansible_extra_options` : Ansible options to append to the ansible-playbook commands. Default is set to "-v".
  * `helpernode_tag` : Checkout level for [ocp4-helpernode](https://github.com/RedHatOfficial/ocp4-helpernode) which is used for setting up services required on bastion node.
+ * `install_playbook_tag` : Checkout level for [ocp4-playbooks](https://github.com/ocp-power-automation/ocp4-playbooks) which is used for running ocp4 installations steps.
  * `pull_secret_file` : Location of the pull-secret file to be used.
  * `cluster_domain` : Cluster domain name. cluster_id.cluster_domain together form the fully qualified domain name.
  * `cluster_id_prefix` : Cluster identifier. Should not be more than 8 characters. Nodes are pre-fixed with this value, please keep it unique (may be with your name).
