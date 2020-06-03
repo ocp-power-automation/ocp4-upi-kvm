@@ -81,7 +81,7 @@ Edit the var.tfvars file with following values:
 
 ## How-to run Terraform resources
 On your Terraform client machine:
-1. `cd ocp4_upi_kvm`
+1. `cd ocp4-upi-kvm`
 1. `terraform init`
 1. `terraform apply -var-file var.tfvars`
 

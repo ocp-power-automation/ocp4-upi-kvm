@@ -52,7 +52,7 @@ variable "rhcos_image" {
 variable "bastion" {
     # only one node is supported
     default = {
-        memory  = 4096
+        memory  = 8192
         vcpu    = 2
     }
 }
@@ -68,14 +68,14 @@ variable "bootstrap" {
 variable "master" {
     default = {
         count   = 3
-        memory  = 8192
+        memory  = 16384
         vcpu    = 4
     }
 }
 variable "worker" {
     default = {
         count   = 2
-        memory  = 8192
+        memory  = 16384
         vcpu    = 4
     }
 }
@@ -171,11 +171,11 @@ locals {
 ### OpenShift variables
 ################################################################
 variable "openshift_install_tarball" {
-    default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/4.3.18/openshift-install-linux.tar.gz"
+    default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/4.4.0-0.nightly-ppc64le-2020-06-02-231523/openshift-install-linux.tar.gz"
 }
 
 variable "openshift_client_tarball" {
-    default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/4.3.18/openshift-client-linux.tar.gz"
+     default = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/4.4.0-0.nightly-ppc64le-2020-06-02-231523/openshift-client-linux.tar.gz"
 }
 
 variable "release_image_override" {
