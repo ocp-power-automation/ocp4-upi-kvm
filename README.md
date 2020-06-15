@@ -25,7 +25,7 @@ on installing `git` for Linux and Mac.
 - **Terraform**: You'll need to use version `0.12.20`. Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac.
 - **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. Enable IP forwarding and configure
 libvirt to accept TCP connections for remote installations. Ensure firewall rules allow remote connections to the host.
-
+- **Go**: Please refer to the following [link] (https://golang.org/dl/)
 
 ## Image and LPAR requirements
 
@@ -45,6 +45,9 @@ Follow these steps to kickstart OCP installation on KVM
 On your Terraform client machine:
 1. `git clone https://github.com/ocp-power-automation/ocp4-upi-kvm.git`
 2. `cd ocp4_upi_kvm`
+3. `go get -u github.com/dmacvicar/terraform-provider-libvirt`
+
+   `cp $GOPATH/bin/terraform-provider-libvirt ~/.terraform.d/plugins/darwin_amd64/`
 
 ## Setup required Terraform Variables
 Update the var.tfvars file with values specific to your environment. Following is a brief description of the variables.
