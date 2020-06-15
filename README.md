@@ -25,7 +25,7 @@ on installing `git` for Linux and Mac.
 - **Terraform**: You'll need to use version `0.12.20`. Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac.
 - **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. Enable IP forwarding and configure
 libvirt to accept TCP connections for remote installations. Ensure firewall rules allow remote connections to the host.
-- **Go**: Please refer to the following [link] (https://golang.org/dl/)
+- **Go**: Please refer to the following [link](https://golang.org/dl/) for instructions on installing `go` for Linux and Mac
 
 ## Image and LPAR requirements
 
