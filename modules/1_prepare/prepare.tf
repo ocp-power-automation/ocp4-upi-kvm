@@ -204,7 +204,7 @@ resource "null_resource" "setup_nfs_disk" {
         inline = [
             "rm -rf mkdir ${local.storage_path}; mkdir -p ${local.storage_path}; chmod -R 755 ${local.storage_path}",
             "sudo chmod +x /tmp/find_disk.sh",
-            "disk_name=$(/tmp/find_disk.sh); sudo mkfs.ext4 -F $disk_name; echo '$disk_name ${local.storage_path} ext4 defaults 0 0' | sudo tee -a /etc/fstab > /dev/null; sudo mount ${local.storage_path}",
+            "disk_name=$(/tmp/find_disk.sh); sudo mkfs.ext4 -F $disk_name; echo \"$disk_name ${local.storage_path} ext4 defaults 0 0\" | sudo tee -a /etc/fstab > /dev/null; sudo mount ${local.storage_path}",
         ]
     }
 }
