@@ -28,7 +28,7 @@ libvirt to accept TCP connections for remote installations. Ensure firewall rule
 
 # Image and VM requirements
 
-RedHat CoreOS (RHCOS) images for Power can be downloaded from [here](https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/).
+For information on how to configure the images required for the automation see [Preparing Images for Power](docs/prepare_images.md).
 
 Following are the recommended VM configs for OpenShift nodes that will be deployed with RHCOS image.
 - Bootstrap, Master - 4 vCPUs, 16GB RAM, 120 GB Disk
