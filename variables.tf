@@ -151,7 +151,7 @@ variable "helpernode_tag" {
 variable "install_playbook_tag" {
     description = "Set the branch/tag name or commit# for using ocp4-playbooks repo"
     # Checkout level for https://github.com/ocp-power-automation/ocp4-playbooks which is used for running ocp4 installations steps
-    default = "90c7cc478c8751d0b22c163e101a0d49e15e2e08"
+    default = "fd018e391831d431a0828b58c7b25f7c5b0bb581"
 }
 
 variable "ansible_extra_options" {
@@ -209,4 +209,19 @@ variable "volume_size" {
     # If storage_type = nfs, a new volume of this size will be attached to the bastion node.
     # Value in GB
     default = "300"
+}
+
+variable "upgrade_image" {
+    description = "OCP upgrade image"
+    default = ""
+}
+
+variable "upgrade_pause_time" {
+    description = "Number of minutes to pause the playbook execution before starting to check the upgrade status once the upgrade command is executed."
+    default = "90"
+}
+
+variable "upgrade_delay_time" {
+    description = "Number of seconds to wait before re-checking the upgrade status once the playbook execution resumes."
+    default = "600"
 }

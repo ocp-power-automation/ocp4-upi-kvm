@@ -87,6 +87,14 @@ Update the following variables specific to OCP storage. Note that currently only
  * `storage_type` : Storage provisioner to configure. Supported values: nfs (For now only nfs provisioner is supported, any other value won't setup a storageclass)
  * `volume_size` : If storage_type is nfs, a volume will be created with given size in GB and attached to bastion node. Eg: 1000 for 1TB disk.
 
+### Setup OCP Upgrade Variables
+
+Update the following variables specific to OCP upgrade. The upgrade will be performed after a successful install of OCP.
+
+ * `upgrade_image` : (Optional) OpenShift release image having higher and supported version. If set, OCP cluster will be upgraded to this image version. (e.g. `"quay.io/openshift-release-dev/ocp-release-nightly@sha256:552ed19a988fff336712a50..."`)
+ * `upgrade_pause_time` : (Optional) Minutes to pause the playbook execution before starting to check the upgrade status once the upgrade command is executed.
+ * `upgrade_delay_time` : (Optional) Seconds to wait before re-checking the upgrade status once the playbook execution resumes.
+
 ## Setup Data Files
 You need to have following files in data/ directory before running the Terraform templates.
 ```

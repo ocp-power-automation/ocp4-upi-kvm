@@ -70,6 +70,12 @@ locals {
         log_level               = var.log_level
         release_image_override  = var.release_image_override
     }
+
+    upgrade_vars = {
+        upgrade_image   = var.upgrade_image
+        pause_time      = var.upgrade_pause_time
+        delay_time      = var.upgrade_delay_time
+    }
 }
 
 resource "null_resource" "config" {
@@ -136,6 +142,31 @@ resource "null_resource" "install" {
         inline = [
             "echo 'Running ocp install playbook...'",
             "cd ocp4-playbooks && ansible-playbook -i inventory -e @install_vars.yaml playbooks/install.yaml ${var.ansible_extra_options}"
+        ]
+    }
+}
+
+resource "null_resource" "upgrade" {
+    depends_on = [null_resource.install]
+    count      = var.upgrade_image != "" ? 1 : 0
+    connection {
+        type         = "ssh"
+        user         = var.rhel_username
+        host         = var.bastion_ip
+        private_key  = var.private_key
+        agent        = var.ssh_agent
+        timeout      = "15m"
+        bastion_host = var.jump_host
+    }
+
+    provisioner "file" {
+        content     = templatefile("${path.module}/templates/upgrade_vars.yaml", local.upgrade_vars)
+        destination = "~/ocp4-playbooks/upgrade_vars.yaml"
+    }
+    provisioner "remote-exec" {
+        inline = [
+            "echo 'Running ocp upgrade playbook...'",
+            "cd ocp4-playbooks && ansible-playbook -i inventory -e @upgrade_vars.yaml playbooks/upgrade.yaml ${var.ansible_extra_options}"
         ]
     }
 }
