@@ -22,8 +22,7 @@ Run this code from either Mac or Linux (Intel) system.
 - **Git**: Please refer to the following [link](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for instructions
 on installing `git` for Linux and Mac.
 - **Terraform**: You'll need to use version `0.12.20`. Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac.
-- **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. Enable IP forwarding and configure
-libvirt to accept TCP connections for remote installations. Ensure firewall rules allow remote connections to the host.
+- **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. You can follow the [Libvirt Host setup](docs/libvirt-host-setup.md) guide.
 
 
 # Image and VM requirements
