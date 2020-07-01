@@ -61,3 +61,6 @@ variable "log_level" {}
 
 variable "ansible_extra_options" {}
 
+variable "upgrade_image" {}
+variable "upgrade_pause_time" {}
+variable "upgrade_delay_time" {}
