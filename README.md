@@ -27,7 +27,7 @@ on installing `git` for Linux and Mac.
 
 # Image and VM requirements
 
-For information on how to configure the images required for the automation see [Preparing Images for Power](docs/prepare_images.md).
+For information on how to configure the images required for the automation see [Preparing Images for Power](docs/prepare-images.md).
 
 Following are the recommended VM configs for OpenShift nodes that will be deployed with RHCOS image.
 - Bootstrap, Master - 4 vCPUs, 16GB RAM, 120 GB Disk
