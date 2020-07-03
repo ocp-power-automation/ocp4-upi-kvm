@@ -5,7 +5,7 @@ images_path     = "/home/libvirt/openshift-images"
 
 ### Configure the Nodes details
 bastion_image   = "http://remote_server/rhel-8.1-ppc64le-kvm.qcow2"
-rhcos_image     = "http://remote_server/rhcos-4.4.0-0.nightly-ppc64le-2020-05-08-093850-qemu.ppc64le.qcow2"
+rhcos_image     = "http://remote_server/rhcos-4.4.9-ppc64le-qemu.ppc64le.qcow2"
 bastion         = { memory = 8192, vcpu = 2 }
 bootstrap       = { memory = 8192, vcpu = 4, count = 1 }
 master          = { memory = 16384, vcpu = 4, count = 3 }
@@ -21,8 +21,8 @@ rhel_subscription_username  = ""
 rhel_subscription_password  = ""
 
 ### OpenShift variables
-openshift_install_tarball   = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/4.4.0-0.nightly-ppc64le-2020-06-02-231523/openshift-install-linux.tar.gz"
-openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/4.4.0-0.nightly-ppc64le-2020-06-02-231523/openshift-client-linux.tar.gz"
+openshift_install_tarball   = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-install-linux.tar.gz"
+openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-client-linux.tar.gz"
 
 #release_image_override     = ""
 
