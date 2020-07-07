@@ -1,6 +1,6 @@
 # Steps to build terraform providers
 
-Follow below steps to setup terraform providers. These steps are required to be followed before running the automation.
+Follow below steps based on your Terraform Client Machine Architecture to setup terraform providers. These steps are required to be followed before running the automation.
 
 ## On Mac/Linux
 Install latest go from https://golang.org/dl/ and set your GOPATH
