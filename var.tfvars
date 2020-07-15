@@ -30,12 +30,18 @@ pull_secret_file            = "data/pull-secret.txt"
 cluster_domain              = "example.com"
 cluster_id_prefix           = "test"
 
+### Local registry variables
+enable_local_registry = false  #Set to true to enable usage of the local registry for restricted network install.
+
+#local_registry_image = "docker.io/ibmcom/registry-ppc64le:2.6.2.5"
+#ocp_release_tag      = "4.4.9-ppc64le"
+
 dns_forwarders              = "1.1.1.1; 9.9.9.9"
 installer_log_level         = "info"
 ansible_extra_options       = "-v"
 
-#helpernode_tag             = "fddbbc651153ef2966e5cb4d4167990b31c01ceb"
-#install_playbook_tag       = "fd018e391831d431a0828b58c7b25f7c5b0bb581"
+#helpernode_tag             = "5eab3db53976bb16be582f2edc2de02f7510050d"
+#install_playbook_tag       = "d2509c4b4a67879daa6338f68e8e7eb1e15d05e2"
 
 storage_type                = "nfs"
 volume_size                 = "300" # Value in GB

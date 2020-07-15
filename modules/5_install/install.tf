@@ -19,6 +19,13 @@
 ################################################################
 
 locals {
+    local_registry  = {
+        enable_local_registry   = var.enable_local_registry
+        registry_image          = var.local_registry_image
+        ocp_release_repo        = "ocp4/openshift4"
+        ocp_release_tag         = var.ocp_release_tag
+    }
+
     helpernode_vars = {
         cluster_domain  = var.cluster_domain
         cluster_id      = var.cluster_id
@@ -50,9 +57,12 @@ locals {
             }
         ]
 
-        client_tarball  = var.openshift_client_tarball
-        install_tarball = var.openshift_install_tarball
+        local_registry           = local.local_registry
+        client_tarball           = var.openshift_client_tarball
+        install_tarball          = var.openshift_install_tarball
     }
+
+    local_registry_ocp_image = "registry.${var.cluster_id}.${var.cluster_domain}:5000/${local.local_registry.ocp_release_repo}:${var.ocp_release_tag}"
 
     inventory = {
         bastion_ip      = var.bastion_ip
@@ -68,7 +78,8 @@ locals {
         public_ssh_key          = var.public_key
         storage_type            = var.storage_type
         log_level               = var.log_level
-        release_image_override  = var.release_image_override
+        release_image_override  = var.enable_local_registry ? "${local.local_registry_ocp_image}" : var.release_image_override
+        enable_local_registry   = var.enable_local_registry
     }
 
     upgrade_vars = {
@@ -91,11 +102,16 @@ resource "null_resource" "config" {
 
     provisioner "remote-exec" {
         inline = [
+            "mkdir -p .openshift",
             "rm -rf ocp4-helpernode",
             "echo 'Cloning into ocp4-helpernode...'",
             "git clone https://github.com/RedHatOfficial/ocp4-helpernode --quiet",
             "cd ocp4-helpernode && git checkout ${var.helpernode_tag}"
         ]
+    }
+    provisioner "file" {
+        source      = "data/pull-secret.txt"
+        destination = "~/.openshift/pull-secret"
     }
     provisioner "file" {
         content     = templatefile("${path.module}/templates/helpernode_vars.yaml", local.helpernode_vars)
