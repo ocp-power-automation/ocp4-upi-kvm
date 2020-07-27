@@ -30,6 +30,7 @@ openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc
 pull_secret_file            = "data/pull-secret.txt"
 cluster_domain              = "example.com"
 cluster_id_prefix           = "test"
+cluster_id                  = ""
 
 dns_forwarders              = "1.1.1.1; 9.9.9.9"
 installer_log_level         = "info"

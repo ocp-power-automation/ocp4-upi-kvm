@@ -27,15 +27,21 @@ provider "libvirt" {
 }
 
 resource "random_id" "label" {
+    count = var.cluster_id == "" ? 1 : 0
     byte_length = "2" # Since we use the hex, the word lenght would double
     prefix = "${var.cluster_id_prefix}-"
+}
+
+locals {
+    # Generates cluster_id as combination of cluster_id_prefix + (random_id or user-defined cluster_id)
+    cluster_id  = var.cluster_id == "" ? random_id.label[0].hex : "${var.cluster_id_prefix}-${var.cluster_id}"
 }
 
 module "prepare" {
     source                          = "./modules/1_prepare"
 
     cluster_domain                  = var.cluster_domain
-    cluster_id                      = "${random_id.label.hex}"
+    cluster_id                      = local.cluster_id
     bastion                         = var.bastion
     cpu_mode                        = var.cpu_mode
     bastion_image                   = var.bastion_image
@@ -58,7 +64,7 @@ module "nodes" {
 
     bastion_ip                      = module.prepare.bastion_ip
     cluster_domain                  = var.cluster_domain
-    cluster_id                      = "${random_id.label.hex}"
+    cluster_id                      = local.cluster_id
     bootstrap                       = var.bootstrap
     master                          = var.master
     worker                          = var.worker
@@ -73,7 +79,7 @@ module "install" {
     source                          = "./modules/5_install"
 
     cluster_domain                  = var.cluster_domain
-    cluster_id                      = "${random_id.label.hex}"
+    cluster_id                      = local.cluster_id
     dns_forwarders                  = var.dns_forwarders
     gateway_ip                      = cidrhost(var.network_cidr,1)
     cidr                            = var.network_cidr
