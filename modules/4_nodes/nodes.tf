@@ -153,7 +153,7 @@ resource "libvirt_domain" "bootstrap" {
         target_port = 0
     }
     cpu = {
-        mode = "host-passthrough"
+        mode = var.cpu_mode
     }
     network_interface {
         network_id  = var.network_id
@@ -177,7 +177,7 @@ resource "libvirt_domain" "master" {
         target_port = 0
     }
     cpu = {
-        mode = "host-passthrough"
+        mode = var.cpu_mode
     }
     network_interface {
         network_id  = var.network_id
@@ -201,7 +201,7 @@ resource "libvirt_domain" "worker" {
         target_port = 0
     }
     cpu = {
-        mode = "host-passthrough"
+        mode = var.cpu_mode
     }
     network_interface {
         network_id  = var.network_id

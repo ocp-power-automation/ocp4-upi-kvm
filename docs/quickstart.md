@@ -53,6 +53,7 @@ Update the following variables specific to your cluster requirement. All the var
 
 Update the following variables specific to the nodes.
 
+ * `cpu_mode` : (Optional) Guest CPU mode value. Eg: custom, host-passthrough, host-model.
  * `network_cidr` : (Optional) Network subnet range for the cluster. Ensure it is unique for each cluster on the same host. Default is set to '192.168.27.0/24'.
  * `rhel_username` : (Optional) The user that we should use for the connection to the bastion host. Default is set to 'root'.
  * `rhel_password` : (Optional) The password for above username for the connection to the bastion host initially. Leave empty if ssh-key is already set on bastion_image.
@@ -61,7 +62,7 @@ Update the following variables specific to the nodes.
  * `private_key_file` : (Optional) Corresponding private key file. Default path is '~/.ssh/id_rsa'.
  * `private_key` : (Optional) The contents of an SSH key to use for the connection. Ignored if `public_key_file` is provided.
  * `public_key` :(Optional) The contents of corresponding key to use for the connection. Ignored if `public_key_file` is provided.
- * `rhel_subscription_username` : (Optional) The username required for RHEL subcription on bastion host. Leave empty if repos are already set in the bastion_imageyy and subscription is not needed.
+ * `rhel_subscription_username` : (Optional) The username required for RHEL subcription on bastion host. Leave empty if repos are already set in the bastion_image and subscription is not needed.
  * `rhel_subscription_password` : (Optional) The password required for RHEL subcription on bastion host.
 
 ### Setup OpenShift Variables

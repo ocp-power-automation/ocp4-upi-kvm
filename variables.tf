@@ -80,6 +80,11 @@ variable "worker" {
     }
 }
 
+variable "cpu_mode" {
+    description = "Optional guest CPU mode value. Eg: custom, host-passthrough, host-model"
+    default     = ""
+}
+
 variable "network_cidr" {
     description = "Network subnet range for the cluster nodes"
     default     = "192.168.27.0/24"

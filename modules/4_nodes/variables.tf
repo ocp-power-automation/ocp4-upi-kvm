@@ -44,6 +44,8 @@ variable "worker" {
     }
 }
 
+variable "cpu_mode" {}
+
 variable "rhcos_image" {}
 variable "storage_pool_name" {}
 variable "network_cidr" {}

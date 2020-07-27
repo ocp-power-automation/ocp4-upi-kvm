@@ -87,7 +87,7 @@ resource "libvirt_domain" "bastion" {
     }
 
     cpu = {
-        mode = "host-passthrough"
+        mode = var.cpu_mode
     }
 
     network_interface {
@@ -145,18 +145,6 @@ then
     sudo subscription-manager register --username=${var.rhel_subscription_username} --password=${var.rhel_subscription_password} --force
     sudo subscription-manager refresh
     sudo subscription-manager attach --auto
-fi
-EOF
-        ]
-    }
-    provisioner "remote-exec" {
-        when        = destroy
-        on_failure  = continue
-        inline = [<<EOF
-if [ '${var.rhel_subscription_username}' != '' ]
-then
-    sudo subscription-manager unregister
-    sudo subscription-manager remove --all
 fi
 EOF
         ]
