@@ -37,6 +37,7 @@ module "prepare" {
     cluster_domain                  = var.cluster_domain
     cluster_id                      = "${random_id.label.hex}"
     bastion                         = var.bastion
+    cpu_mode                        = var.cpu_mode
     bastion_image                   = var.bastion_image
     rhel_username                   = var.rhel_username
     rhel_password                   = var.rhel_password
@@ -61,6 +62,7 @@ module "nodes" {
     bootstrap                       = var.bootstrap
     master                          = var.master
     worker                          = var.worker
+    cpu_mode                        = var.cpu_mode
     rhcos_image                     = var.rhcos_image
     storage_pool_name               = module.prepare.storage_pool_name
     network_cidr                    = var.network_cidr

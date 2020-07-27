@@ -32,6 +32,9 @@ variable "bastion" {
         vcpu    = 2
     }
 }
+
+variable "cpu_mode" {}
+
 variable "bastion_image" { default   = "file:///home/libvirt/images/bastion.qcow2" }
 
 variable "rhel_username" {}

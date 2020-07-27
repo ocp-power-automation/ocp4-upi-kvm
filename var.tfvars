@@ -10,6 +10,7 @@ bastion         = { memory = 8192, vcpu = 2 }
 bootstrap       = { memory = 8192, vcpu = 4, count = 1 }
 master          = { memory = 16384, vcpu = 4, count = 3 }
 worker          = { memory = 16384, vcpu = 4, count = 2 }
+cpu_mode        = ""
 network_cidr    = "192.168.88.0/24"
 rhel_username   = "root"
 rhel_password   = "123456"
