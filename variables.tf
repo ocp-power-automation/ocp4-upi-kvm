@@ -200,6 +200,11 @@ variable "cluster_domain" {
 variable "cluster_id_prefix" {
     default = "test"
 }
+# Must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+# Length cannot exceed 14 characters when combined with cluster_id_prefix
+variable "cluster_id" {
+    default   = ""
+}
 
 variable "dns_forwarders" {
     default = "8.8.8.8; 8.8.4.4"
