@@ -37,11 +37,12 @@ installer_log_level         = "info"
 ansible_extra_options       = "-v"
 
 #helpernode_tag             = "fddbbc651153ef2966e5cb4d4167990b31c01ceb"
-#install_playbook_tag       = "fd018e391831d431a0828b58c7b25f7c5b0bb581"
+#install_playbook_tag       = "9cfd3b330464152e795e7e4ea61385b8e684685a"
 
 storage_type                = "nfs"
 volume_size                 = "300" # Value in GB
 
-#upgrade_image = ""
+#upgrade_version = ""
+#upgrade_channel = ""  #(stable-4.x, fast-4.x, candidate-4.x) eg. stable-4.5
 #upgrade_pause_time = "90"
 #upgrade_delay_time = "600"

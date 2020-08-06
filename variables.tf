@@ -156,7 +156,7 @@ variable "helpernode_tag" {
 variable "install_playbook_tag" {
     description = "Set the branch/tag name or commit# for using ocp4-playbooks repo"
     # Checkout level for https://github.com/ocp-power-automation/ocp4-playbooks which is used for running ocp4 installations steps
-    default = "fd018e391831d431a0828b58c7b25f7c5b0bb581"
+    default = "9cfd3b330464152e795e7e4ea61385b8e684685a"
 }
 
 variable "ansible_extra_options" {
@@ -221,8 +221,13 @@ variable "volume_size" {
     default = "300"
 }
 
-variable "upgrade_image" {
-    description = "OCP upgrade image"
+variable "upgrade_version" {
+    description = "OCP upgrade version eg. 4.5.4"
+    default = ""
+}
+
+variable "upgrade_channel" {
+    description = "Upgrade channel having required version availble for cluster upgrade (stable-4.x, fast-4.x, candidate-4.x) eg. stable-4.5"
     default = ""
 }
 
