@@ -36,8 +36,8 @@ dns_forwarders              = "1.1.1.1; 9.9.9.9"
 installer_log_level         = "info"
 ansible_extra_options       = "-v"
 
-#helpernode_tag             = "fddbbc651153ef2966e5cb4d4167990b31c01ceb"
-#install_playbook_tag       = "9cfd3b330464152e795e7e4ea61385b8e684685a"
+#helpernode_tag             = ""
+#install_playbook_tag       = ""
 
 storage_type                = "nfs"
 volume_size                 = "300" # Value in GB
