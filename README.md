@@ -21,7 +21,7 @@ Run this code from either Mac or Linux (Intel) system.
 # Pre-requisites
 - **Git**: Please refer to the following [link](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for instructions
 on installing `git` for Linux and Mac.
-- **Terraform**: You'll need to use version `0.12.20`. Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac.
+- **Terraform >= 0.12.2, < 0.13**: Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac.
 - **Terraform Providers**: Please ensure terraform providers are built and installed on Terraform Client Machine. You can follow the [Build Terraform Providers](docs/terraform-provider-build.md) guide.
 - **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. You can follow the [Libvirt Host setup](docs/libvirt-host-setup.md) guide.
 

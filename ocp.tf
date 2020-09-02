@@ -19,7 +19,12 @@
 ################################################################
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = "~> 0.12.2"
+  required_providers {
+    ignition = "~> 1.2"
+    null = "~> 2.1"
+    random = "~> 2.3"
+  }
 }
 
 provider "libvirt" {
