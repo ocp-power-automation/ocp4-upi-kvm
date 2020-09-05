@@ -1,0 +1,69 @@
+diff --git a/ocp.tf b/ocp.tf
+index 1e1d281..133422d 100644
+--- a/ocp.tf
++++ b/ocp.tf
+@@ -20,11 +20,6 @@
+ 
+ terraform {
+   required_version = "~> 0.12.2"
+-  required_providers {
+-    ignition = "~> 1.2"
+-    null = "~> 2.1"
+-    random = "~> 2.3"
+-  }
+ }
+ 
+ provider "libvirt" {
+diff --git a/var.tfvars b/var.tfvars
+index d8958c1..af8443c 100644
+--- a/var.tfvars
++++ b/var.tfvars
+@@ -1,15 +1,15 @@
+ ### Configure the Libvirt Host values
+ libvirt_uri     = "qemu+tcp://localhost/system"
+-host_address    = ""
+-images_path     = "/home/libvirt/openshift-images"
++host_address    = "<BASTION_IP>"
++images_path     = "<IMAGES_PATH>"
+ 
+ ### Configure the Nodes details
+-bastion_image   = "http://remote_server/rhel-8.1-ppc64le-kvm.qcow2"
+-rhcos_image     = "http://remote_server/rhcos-4.4.9-ppc64le-qemu.ppc64le.qcow2"
++bastion_image   = "<IMAGES_PATH>/bastion.qcow2"
++rhcos_image     = "<IMAGES_PATH>/rhcos.qcow2"
+ bastion         = { memory = 8192, vcpu = 2 }
+ bootstrap       = { memory = 8192, vcpu = 4, count = 1 }
+-master          = { memory = 16384, vcpu = 4, count = 3 }
+-worker          = { memory = 16384, vcpu = 4, count = 2 }
++master          = { memory = <MASTER_DESIRED_MEM>, vcpu = <MASTER_DESIRED_CPU>, count = 3 }
++worker          = { memory = <WORKER_DESIRED_MEM>, vcpu = <WORKER_DESIRED_CPU>, count = <WORKERS> }
+ cpu_mode        = ""
+ network_cidr    = "192.168.88.0/24"
+ rhel_username   = "root"
+@@ -18,19 +18,19 @@ public_key_file             = "~/.ssh/id_rsa.pub"
+ private_key_file            = "~/.ssh/id_rsa"
+ private_key                 = ""
+ public_key                  = ""
+-rhel_subscription_username  = ""
+-rhel_subscription_password  = ""
++rhel_subscription_username  = "<RHID_USERNAME>"
++rhel_subscription_password  = "<RHID_PASSWORD>"
+ 
+ ### OpenShift variables
+-openshift_install_tarball   = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-install-linux.tar.gz"
+-openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-client-linux.tar.gz"
++openshift_install_tarball   = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/<INSTALLER_VERSION>/openshift-install-linux.tar.gz"
++openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/<INSTALLER_VERSION>/openshift-client-linux.tar.gz"
+ 
+-#release_image_override     = ""
++release_image_override      = "<IMAGE_OVERRIDE>"
+ 
+ pull_secret_file            = "data/pull-secret.txt"
+-cluster_domain              = "example.com"
++cluster_domain              = "<CLUSTER_DOMAIN>"
+ cluster_id_prefix           = "test"
+-cluster_id                  = ""
++cluster_id                  = "ocp<OCP_VERSION>"
+ 
+ dns_forwarders              = "1.1.1.1; 9.9.9.9"
+ installer_log_level         = "info"
