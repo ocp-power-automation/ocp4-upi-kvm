@@ -22,8 +22,8 @@ rhel_subscription_username  = ""
 rhel_subscription_password  = ""
 
 ### OpenShift variables
-openshift_install_tarball   = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-install-linux.tar.gz"
-openshift_client_tarball    = "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable-4.4/openshift-client-linux.tar.gz"
+# openshift_install_tarball   = ""
+# openshift_client_tarball    = ""
 
 #release_image_override     = ""
 
