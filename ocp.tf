@@ -21,17 +21,66 @@
 provider "libvirt" {
     uri = var.libvirt_uri
 }
-
 resource "random_id" "label" {
     count = var.cluster_id == "" ? 1 : 0
     byte_length = "2" # Since we use the hex, the word lenght would double
     prefix = "${var.cluster_id_prefix}-"
 }
 
+resource "random_id" "b" {
+    byte_length = "3"
+}
+resource "random_id" "m" {
+    count       = var.master["count"]
+    byte_length = "3"
+}
+resource "random_id" "w" {
+    count       = var.worker["count"]
+    byte_length = "3"
+}
+
 locals {
     # Generates cluster_id as combination of cluster_id_prefix + (random_id or user-defined cluster_id)
     cluster_id  = var.cluster_id == "" ? random_id.label[0].hex : "${var.cluster_id_prefix}-${var.cluster_id}"
+
+    bootstrap = {
+        ip      = cidrhost(var.network_cidr, 3)
+        mac     = format(
+                    "52:54:00:%s:%s:%s",
+                    substr(random_id.b.hex,0,2),
+                    substr(random_id.b.hex,2,2),
+                    substr(random_id.b.hex,4,2)
+                )
+    }
+    first_master_hostnum    = 4
+    first_worker_hostnum    = 21
 }
+
+resource "null_resource" "master_info" {
+    count       = var.master["count"]
+    triggers    = {
+        ip      = cidrhost(var.network_cidr, local.first_master_hostnum + count.index)
+        mac     =  format(
+                    "52:54:00:%s:%s:%s",
+                    substr(random_id.m[count.index].hex,0,2),
+                    substr(random_id.m[count.index].hex,2,2),
+                    substr(random_id.m[count.index].hex,4,2)
+                )
+    }
+}
+resource "null_resource" "worker_info" {
+    count       = var.worker["count"]
+    triggers    = {
+        ip      = cidrhost(var.network_cidr, local.first_worker_hostnum + count.index)
+        mac     = format(
+                    "52:54:00:%s:%s:%s",
+                    substr(random_id.w[count.index].hex,0,2),
+                    substr(random_id.w[count.index].hex,2,2),
+                    substr(random_id.w[count.index].hex,4,2)
+                )
+    }
+}
+
 
 module "prepare" {
     source                          = "./modules/1_prepare"
@@ -55,24 +104,9 @@ module "prepare" {
     volume_size                     = var.volume_size
 }
 
-module "nodes" {
-    source                          = "./modules/4_nodes"
-
-    bastion_ip                      = module.prepare.bastion_ip
-    cluster_domain                  = var.cluster_domain
-    cluster_id                      = local.cluster_id
-    bootstrap                       = var.bootstrap
-    master                          = var.master
-    worker                          = var.worker
-    cpu_mode                        = var.cpu_mode
-    rhcos_image                     = var.rhcos_image
-    storage_pool_name               = module.prepare.storage_pool_name
-    network_cidr                    = var.network_cidr
-    network_id                      = module.prepare.network_id
-}
-
-module "install" {
-    source                          = "./modules/5_install"
+module "helpernode" {
+    depends_on                      = [module.prepare]
+    source                          = "./modules/3_helpernode"
 
     cluster_domain                  = var.cluster_domain
     cluster_id                      = local.cluster_id
@@ -85,19 +119,56 @@ module "install" {
     private_key                     = local.private_key
     ssh_agent                       = var.ssh_agent
     jump_host                       = var.host_address
-    bootstrap_ip                    = module.nodes.bootstrap_ip
-    master_ips                      = module.nodes.master_ips
-    worker_ips                      = module.nodes.worker_ips
-    bootstrap_mac                   = module.nodes.bootstrap_mac
-    master_macs                     = module.nodes.master_macs
-    worker_macs                     = module.nodes.worker_macs
-    public_key                      = local.public_key
-    pull_secret                     = file(coalesce(var.pull_secret_file, "/dev/null"))
+    bootstrap_ip                    = local.bootstrap.ip
+    master_ips                      = null_resource.master_info.*.triggers.ip
+    worker_ips                      = null_resource.worker_info.*.triggers.ip
+    bootstrap_mac                   = local.bootstrap.mac
+    master_macs                     = null_resource.master_info.*.triggers.mac
+    worker_macs                     = null_resource.worker_info.*.triggers.mac
+    helpernode_tag                  = var.helpernode_tag
     openshift_install_tarball       = var.openshift_install_tarball
     openshift_client_tarball        = var.openshift_client_tarball
+    ansible_extra_options           = var.ansible_extra_options
+}
+
+module "nodes" {
+    depends_on                      = [module.helpernode]
+    source                          = "./modules/4_nodes"
+
+    bastion_ip                      = module.prepare.bastion_ip
+    cluster_domain                  = var.cluster_domain
+    cluster_id                      = local.cluster_id
+    bootstrap                       = var.bootstrap
+    master                          = var.master
+    worker                          = var.worker
+    bootstrap_mac                   = local.bootstrap.mac
+    master_macs                     = null_resource.master_info.*.triggers.mac
+    worker_macs                     = null_resource.worker_info.*.triggers.mac
+    cpu_mode                        = var.cpu_mode
+    rhcos_image                     = var.rhcos_image
+    storage_pool_name               = module.prepare.storage_pool_name
+    network_cidr                    = var.network_cidr
+    network_id                      = module.prepare.network_id
+}
+
+module "install" {
+    depends_on                      = [module.nodes]
+    source                          = "./modules/5_install"
+
+    cluster_domain                  = var.cluster_domain
+    cluster_id                      = local.cluster_id
+    bastion_ip                      = module.prepare.bastion_ip
+    rhel_username                   = var.rhel_username
+    private_key                     = local.private_key
+    ssh_agent                       = var.ssh_agent
+    jump_host                       = var.host_address
+    bootstrap_ip                    = local.bootstrap.ip
+    master_ips                      = null_resource.master_info.*.triggers.ip
+    worker_ips                      = null_resource.worker_info.*.triggers.ip
+    public_key                      = local.public_key
+    pull_secret                     = file(coalesce(var.pull_secret_file, "/dev/null"))
     storage_type                    = var.storage_type
     release_image_override          = var.release_image_override
-    helpernode_tag                  = var.helpernode_tag
     install_playbook_tag            = var.install_playbook_tag
     log_level                       = var.installer_log_level
     ansible_extra_options           = var.ansible_extra_options

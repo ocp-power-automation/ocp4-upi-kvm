@@ -44,6 +44,10 @@ variable "worker" {
     }
 }
 
+variable "bootstrap_mac" {}
+variable "master_macs" {}
+variable "worker_macs" {}
+
 variable "cpu_mode" {}
 
 variable "rhcos_image" {}

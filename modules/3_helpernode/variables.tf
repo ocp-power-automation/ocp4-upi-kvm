@@ -18,26 +18,35 @@
 #
 ################################################################
 
-output "bootstrap_ip" {
-    value = local.bootstrap_ip
+variable "cluster_domain" {
+  default   = "example.com"
+}
+variable "cluster_id" {
+  default   = "test-ocp"
 }
 
-output "master_ips" {
-    value = null_resource.master_ip.*.triggers.address
-}
+variable "dns_forwarders" {}
+variable "gateway_ip" {}
+variable "cidr" {}
+variable "allocation_pools" {}
 
-output "worker_ips" {
-    value = null_resource.worker_ip.*.triggers.address
-}
+variable "bastion_ip" {}
+variable "rhel_username" {}
+variable "private_key" {}
+variable "ssh_agent" {}
+variable "jump_host" { default = "" }
 
-output "bootstrap_mac" {
-    value = "${join("", flatten(libvirt_domain.bootstrap.*.network_interface).*.mac)}"
-}
+variable "bootstrap_ip" {}
+variable "master_ips" {}
+variable "worker_ips" {}
 
-output "master_macs" {
-    value = flatten(flatten(libvirt_domain.master.*.network_interface).*.mac)
-}
+variable "bootstrap_mac" {}
+variable "master_macs" {}
+variable "worker_macs" {}
 
-output "worker_macs" {
-    value = flatten(flatten(libvirt_domain.worker.*.network_interface).*.mac)
-}
+variable "openshift_client_tarball" {}
+variable "openshift_install_tarball" {}
+
+variable "helpernode_tag" {}
+
+variable "ansible_extra_options" {}

@@ -18,12 +18,6 @@
 #
 ################################################################
 
-locals {
-    bootstrap_ip    = cidrhost(var.network_cidr, 3)
-    first_master_ip = 4
-    first_worker_ip = 11
-}
-
 resource "libvirt_volume" "rhcos_base" {
     name    = "${var.cluster_id}-rhcos-base-vol"
     source  = var.rhcos_image
@@ -157,6 +151,7 @@ resource "libvirt_domain" "bootstrap" {
     network_interface {
         network_id  = var.network_id
         hostname    = "bootstrap.${var.cluster_id}.${var.cluster_domain}"
+        mac         = var.bootstrap_mac
     }
 }
 
@@ -181,6 +176,7 @@ resource "libvirt_domain" "master" {
     network_interface {
         network_id  = var.network_id
         hostname    = "master-${count.index}.${var.cluster_id}.${var.cluster_domain}"
+        mac         = var.master_macs[count.index]
     }
 }
 
@@ -205,19 +201,6 @@ resource "libvirt_domain" "worker" {
     network_interface {
         network_id  = var.network_id
         hostname    = "worker-${count.index}.${var.cluster_id}.${var.cluster_domain}"
-    }
-}
-
-resource "null_resource" "master_ip" {
-    count       = var.master["count"]
-    triggers    = {
-        address = cidrhost(var.network_cidr, local.first_master_ip + count.index)
-    }
-}
-
-resource "null_resource" "worker_ip" {
-    count       = var.worker["count"]
-    triggers    = {
-        address = cidrhost(var.network_cidr, local.first_worker_ip + count.index)
+        mac         = var.worker_macs[count.index]
     }
 }
