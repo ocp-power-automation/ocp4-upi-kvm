@@ -19,41 +19,6 @@
 ################################################################
 
 locals {
-    helpernode_vars = {
-        cluster_domain  = var.cluster_domain
-        cluster_id      = var.cluster_id
-        bastion_ip      = var.bastion_ip
-        forwarders      = var.dns_forwarders
-        gateway_ip      = var.gateway_ip
-        netmask         = cidrnetmask(var.cidr)
-        broadcast       = cidrhost(var.cidr,-1)
-        ipid            = cidrhost(var.cidr, 0)
-        pool            = var.allocation_pools[0]
-
-        bootstrap_info  = {
-            ip = var.bootstrap_ip,
-            mac = var.bootstrap_mac,
-            name = "bootstrap"
-        }
-        master_info     = [ for ix in range(length(var.master_ips)) :
-            {
-                ip = var.master_ips[ix],
-                mac = var.master_macs[ix],
-                name = "master-${ix}"
-            }
-        ]
-        worker_info     = [ for ix in range(length(var.worker_ips)) :
-            {
-                ip = var.worker_ips[ix],
-                mac = var.worker_macs[ix],
-                name = "worker-${ix}"
-            }
-        ]
-
-        client_tarball  = var.openshift_client_tarball
-        install_tarball = var.openshift_install_tarball
-    }
-
     inventory = {
         bastion_ip      = var.bastion_ip
         bootstrap_ip    = var.bootstrap_ip
@@ -79,40 +44,7 @@ locals {
     }
 }
 
-resource "null_resource" "config" {
-    connection {
-        type        = "ssh"
-        user        = var.rhel_username
-        host        = var.bastion_ip
-        private_key = var.private_key
-        agent       = var.ssh_agent
-        timeout     = "15m"
-        bastion_host = var.jump_host
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "rm -rf ocp4-helpernode",
-            "echo 'Cloning into ocp4-helpernode...'",
-            "git clone https://github.com/RedHatOfficial/ocp4-helpernode --quiet",
-            "cd ocp4-helpernode && git checkout ${var.helpernode_tag}"
-        ]
-    }
-    provisioner "file" {
-        content     = templatefile("${path.module}/templates/helpernode_vars.yaml", local.helpernode_vars)
-        destination = "~/ocp4-helpernode/helpernode_vars.yaml"
-    }
-    provisioner "remote-exec" {
-        inline = [
-            "echo 'Running ocp4-helpernode playbook...'",
-            "cd ocp4-helpernode && ansible-playbook -e @helpernode_vars.yaml tasks/main.yml ${var.ansible_extra_options}"
-        ]
-    }
-}
-
 resource "null_resource" "install" {
-    depends_on = [null_resource.config]
-
     connection {
         type        = "ssh"
         user        = var.rhel_username

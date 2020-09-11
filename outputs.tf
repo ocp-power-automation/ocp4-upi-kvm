@@ -31,15 +31,15 @@ output "bastion_ssh_command" {
 }
 
 output "bootstrap_ip" {
-    value = module.nodes.bootstrap_ip
+    value = local.bootstrap.ip
 }
 
 output "master_ips" {
-    value = module.nodes.master_ips
+    value = null_resource.master_info.*.triggers.ip
 }
 
 output "worker_ips" {
-    value = module.nodes.worker_ips
+    value = null_resource.worker_info.*.triggers.ip
 }
 
 output "etc_hosts_entries" {
