@@ -8,18 +8,19 @@
 # along with the cluster domain, so if the underlying projects change
 # this script will have to change as well.
 
-# These parameters are tied to GH project ocp4-upi-kvm
-
-CLUSTER_DOMAIN=${CLUSTER_DOMAIN:="tt.testing"}
-CLUSTER_CIDR=${CLUSTER_CIDR:="192.168.88.0/24"}
-CLUSTER_GATEWAY=${CLUSTER_GATEWAY:="192.168.88.1"}
-
 if [ ! -e files/haproxy.cfg ]; then
 	echo "Please invoke from the directory ocp4-upi-kvm"
 	exit 1
 fi
 
 set -xe
+
+source scripts/parameters.sh
+
+# These parameters are tied to GH project ocp4-upi-kvm
+
+CLUSTER_CIDR=${CLUSTER_CIDR:="192.168.88.0/24"}
+CLUSTER_GATEWAY=${CLUSTER_GATEWAY:="192.168.88.1"}
 
 yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
 yum -y install powerpc-utils net-tools wget git patch gcc-c++ make

@@ -1,23 +1,13 @@
 #!/bin/bash
 
-export RHID_USERNAME=${RHID_USERNAME:=""}
-export RHID_PASSWORD=${RHID_PASSWORD:=''}
+if [ ! -e files/ocp4-upi-kvm.patch ]; then
+        echo "Please invoke this script from the directory ocp4-upi-kvm"
+        exit 1
+fi
 
 set -xe
 
-export OCP_VERSION=${OCP_VERSION:="4.4"}
-
-export CLUSTER_DOMAIN=${CLUSTER_DOMAIN:="tt.testing"}
-
-export MASTER_DESIRED_CPU=${MASTER_DESIRED_CPU:="4"}
-export MASTER_DESIRED_MEM=${MASTER_DESIRED_MEM:="16384"}
-
-export WORKER_DESIRED_CPU=${WORKER_DESIRED_CPU:="4"}
-export WORKER_DESIRED_MEM=${WORKER_DESIRED_MEM:="16384"}
-
-export WORKERS=${WORKERS:=2}
-
-export IMAGES_PATH=${IMAGES_PATH:="/var/lib/libvirt/images"}
+source scripts/parameters.sh
 
 export BASTION_IMAGE=${BASTION_IMAGE:="rhel-8.2-update-2-ppc64le-kvm.qcow2"}
 
@@ -27,11 +17,6 @@ BASTION_IP=${BASTION_IP:="192.168.88.2"}
 
 export TERRAFORM_VERSION=${TERRAFORM_VERSION:="v0.12.29"}
 export GO_VERSION=${GO_VERSION:="go1.14.8"}
-
-if [ ! -e files/ocp4-upi-kvm.patch ]; then
-        echo "Please invoke from the directory ocp4-upi-kvm"
-        exit 1
-fi
 
 if [[ -z "$RHID_USERNAME" ]] || [[ -z "$RHID_PASSWORD" ]]; then
 	echo "Must specify your redhat subscription RHID_USERNAME=$RHID_USERNAME and RHID_PASSWORD=$RHID_PASSWORD"

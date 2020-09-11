@@ -12,7 +12,6 @@ do
 	virsh destroy $ACTIVEVM
 done
 
-
 # Delete storage volumes
 
 declare -i nvols

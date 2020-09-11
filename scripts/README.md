@@ -10,7 +10,9 @@ OpenShift clusters and operators such as OpenShift Container Storage.
 
 - setup_kvm_host.sh
 - create_cluster.sh
-- virsh-cleanup.sh
+- add_data_disks.sh
+- grow_boot_disks.sh
+- virsh_cleanup.sh
 
 The script setup_kvm_host.sh installs libvirt and haproxy in the host server
 enabling OpenShift clusters to be created.  This script is run once.
@@ -19,7 +21,22 @@ The script create_cluster.sh creates an OpenShift cluster at a given OCP version
 with the designated number of worker nodes in virtual machines. This
 scripts supports OCP versions 4.4, 4.5, and 4.6.
 
-The script virsh-cleanup.sh destroy a cluster by removing all virsh objects
+The script add_data_disks.sh adds a data disk to each worker node
+at /dev/vdc.  The size is configurable.  The worker node needs to be rebooted
+for the disk to show up in the VM.
+
+The script grow_boot_disks.sh expands the size of the boot disk for each
+worker node.  The size is configurable.  This operation involves changing the
+qcow2 image in the host server and expanding the root file system (xfs) in 
+the guest VM.  During this operation, each worker node is rebooted, so this
+script should be invoked after the script add_data_disks.sh for automated
+scenarios.  The original qcow2 image is preserved for manual error recovery.
+
+The scripts add_data_disks.sh and grow_boot_disks.sh are optional.  If these
+scripts are not used, the cluster will be created with a single 16 GB disk
+with approximately 7.5 GBs of free space.
+
+The script virsh_cleanup.sh destroy a cluster by removing all virsh objects
 related to the cluster.  Only one cluster is supported per host server.
 
 ## Required Environment Variables for Cluster Creation
@@ -44,7 +61,7 @@ value of "rhel-8.2-update-2-ppc64le-kvm.qcow2".  This is the name of the file do
 from the RedHat website.  To date, three images have been published.  The one shown above is
 latest.
 
-## Optional Environment Variables with Default Values for Cluster Creation
+## Optional Environment Variables with Default Values
 
 - BASTION_IMAGE=${BASTION_IMAGE:="rhel-8.2-update-2-ppc64le-kvm.qcow2"}
 - OCP_VERSION=${OCP_VERSION:="4.4"}
@@ -56,6 +73,10 @@ latest.
 - WORKERS=${WORKERS:=2}
 - IMAGES_PATH=${IMAGES_PATH:="/var/lib/libvirt/images"}
 - OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=${OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=""}
+- DATA_DISK_SIZE=${DATA_DISK_SIZE:=100}
+- BOOT_DISK_SIZE=${BOOT_DISK_SIZE:=32}   
+
+Disk sizes are in GBs.
 
 Set a new value like this:
 ```
