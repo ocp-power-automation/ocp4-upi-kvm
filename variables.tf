@@ -124,12 +124,21 @@ variable "public_key" {
     default     = ""
 }
 
-# Won't subscribe if rhel_subscription_username is empty (default).
+# Will attempt subscription if this or rhel_subscription_org are set
 variable "rhel_subscription_username" {
     default = ""
 }
 
 variable "rhel_subscription_password" {
+    default = ""
+}
+
+# Will attempt subscription if this or rhel_subscription_username are set
+variable "rhel_subscription_org" {
+    default = ""
+}
+
+variable "rhel_subscription_activationkey" {
     default = ""
 }
 

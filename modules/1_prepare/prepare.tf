@@ -145,6 +145,9 @@ then
     sudo subscription-manager register --username=${var.rhel_subscription_username} --password=${var.rhel_subscription_password} --force
     sudo subscription-manager refresh
     sudo subscription-manager attach --auto
+elif [ '${var.rhel_subscription_org}' != '' ]
+then
+   sudo subscription-manager register --activationkey=${var.rhel_subscription_activationkey} --org=${var.rhel_subscription_org} --force
 fi
 EOF
         ]

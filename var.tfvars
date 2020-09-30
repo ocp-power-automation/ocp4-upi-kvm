@@ -18,8 +18,10 @@ public_key_file             = "~/.ssh/id_rsa.pub"
 private_key_file            = "~/.ssh/id_rsa"
 private_key                 = ""
 public_key                  = ""
-rhel_subscription_username  = ""
-rhel_subscription_password  = ""
+rhel_subscription_username      = ""
+rhel_subscription_password      = ""
+rhel_subscription_org           = ""
+rhel_subscription_activationkey = ""
 
 ### OpenShift variables
 # openshift_install_tarball   = ""
