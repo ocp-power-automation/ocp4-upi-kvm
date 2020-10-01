@@ -119,19 +119,19 @@ data "ignition_config" "worker" {
 # libvirt_ignition
 resource "libvirt_ignition" "bootstrap" {
     name        = "${var.cluster_id}-bootstrap.ign"
-    content     = data.ignition_config.bootstrap.rendered
+    content     = replace(data.ignition_config.bootstrap.rendered, "\"timeouts\":{}", "\"timeouts\":{\"httpTotal\":500}")
     pool        = var.storage_pool_name
 }
 resource "libvirt_ignition" "master" {
     count       = var.master["count"]
     name        = "${var.cluster_id}-master-${count.index}.ign"
-    content     = element(data.ignition_config.master.*.rendered, count.index)
+    content     = replace(element(data.ignition_config.master.*.rendered, count.index), "\"timeouts\":{}", "\"timeouts\":{\"httpTotal\":500}")
     pool        = var.storage_pool_name
 }
 resource "libvirt_ignition" "worker" {
     count       = var.worker["count"]
     name        = "${var.cluster_id}-worker-${count.index}.ign"
-    content     = element(data.ignition_config.worker.*.rendered, count.index)
+    content     = replace(element(data.ignition_config.worker.*.rendered, count.index), "\"timeouts\":{}", "\"timeouts\":{\"httpTotal\":500}")
     pool        = var.storage_pool_name
 }
 
