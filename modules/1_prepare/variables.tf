@@ -49,6 +49,8 @@ variable "images_path" { default = "/home/libvirt/openshift/images" }
 
 variable "rhel_subscription_username" {}
 variable "rhel_subscription_password" {}
+variable "rhel_subscription_org" {}
+variable "rhel_subscription_activationkey" {}
 
 variable "storage_type" {}
 variable "volume_size" {}
