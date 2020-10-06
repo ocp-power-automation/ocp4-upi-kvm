@@ -40,19 +40,9 @@ mkdir -p $PLUGIN_PATH/registry.terraform.io/dmacvicar/libvirt/1.0.0/$PLATFORM/
 cp $GOPATH/bin/terraform-provider-libvirt $PLUGIN_PATH/registry.terraform.io/dmacvicar/libvirt/1.0.0/$PLATFORM/terraform-provider-libvirt
 ```
 
+Upon successful completion. Please follow the instructions outlined here
+https://github.com/ocp-power-automation/ocp4-upi-kvm/blob/master/docs/quickstart.md#start-install
 
-**Ignition provider v2.1.0**
-
-Run below commands to download the **zip** archive from [community-terraform-provider releases page](https://github.com/community-terraform-providers/terraform-provider-ignition/releases/tag/v2.1.0).
-
-```
-PLATFORM=linux_amd64
-PLUGIN_PATH=~/.local/share/terraform/plugins
-
-# Create plugin directory and download the zip file
-mkdir -p $PLUGIN_PATH/registry.terraform.io/terraform-providers/ignition/
-wget https://github.com/community-terraform-providers/terraform-provider-ignition/releases/download/v2.1.0/terraform-provider-ignition_2.1.0_$PLATFORM.zip -P $PLUGIN_PATH/registry.terraform.io/terraform-providers/ignition/
-```
 
 
 ## On IBM Power Systems

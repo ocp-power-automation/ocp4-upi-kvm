@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     ignition = {
-      source = "terraform-providers/ignition"
-      version = "~> 2.1"
+      source  = "community-terraform-providers/ignition"
+      version = "~> 2.1.0"
     }
     libvirt = {
       source = "dmacvicar/libvirt"
@@ -12,5 +12,5 @@ terraform {
       version = "~> 2.1"
     }
   }
-  required_version = "~> 0.13"
+  required_version = "~> 0.13.0"
 }
