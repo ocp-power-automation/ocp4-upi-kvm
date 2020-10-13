@@ -219,6 +219,16 @@ variable "dns_forwarders" {
     default = "8.8.8.8; 8.8.4.4"
 }
 
+variable chrony_config {
+    description = "If true, set enable time synchronization via chronyd. Default: true"
+    default = true
+}
+
+variable chrony_config_servers {
+    default = []
+    # example: chrony_config_servers = [{server = "clock.example.com", options="iburst"}]
+}
+
 variable "storage_type" {
     #Supported values: nfs (other value won't setup a storageclass)
     default = "none"

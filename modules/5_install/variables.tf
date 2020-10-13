@@ -31,6 +31,9 @@ variable "private_key" {}
 variable "ssh_agent" {}
 variable "jump_host" { default = "" }
 
+variable "chrony_config" {}
+variable "chrony_config_servers" {}
+
 variable "bootstrap_ip" {}
 variable "master_ips" {}
 variable "worker_ips" {}
