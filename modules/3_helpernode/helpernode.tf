@@ -19,17 +19,20 @@
 ################################################################
 
 locals {
+    forwarders = tolist(split(";", var.dns_forwarders))
+
     helpernode_vars = {
         cluster_domain  = var.cluster_domain
         cluster_id      = var.cluster_id
         bastion_ip      = var.bastion_ip
-        forwarders      = var.dns_forwarders
         gateway_ip      = var.gateway_ip
         netmask         = cidrnetmask(var.cidr)
         broadcast       = cidrhost(var.cidr,-1)
         ipid            = cidrhost(var.cidr, 0)
         pool            = var.allocation_pools[0]
-
+        forwarder1      = local.forwarders[0]
+        forwarder2      = length(local.forwarders) > 1 ? join(";", slice(local.forwarders, 1, length(local.forwarders))) : ""
+	
         bootstrap_info  = {
             ip = var.bootstrap_ip,
             mac = var.bootstrap_mac,
