@@ -90,6 +90,8 @@ Update the following variables specific to OCP.
  * `install_playbook_tag` : (Optional) [ocp4-playbooks](https://github.com/ocp-power-automation/ocp4-playbooks) ansible playbooks version to checkout.
  * `pull_secret_file` : (Optional) Location of the pull-secret file to be used. Default path is 'data/pull-secret.txt'.
  * `dns_forwarders` : (Optional) External DNS servers to forward DNS queries that cannot resolve locally. Eg: `"8.8.8.8; 9.9.9.9"`.
+ * `chrony_config`: (Optional) Whether to enable NTP via chronyd. Default: true
+ * `chrony_config_servers`: (Optional) NTP servers to use with chrony, e.g. `[{server: "ntp.example.com", options: "iburst"}]`. The default value is `[]`, which uses chronyd's default servers.
 
 ### Setup Storage Variables
 

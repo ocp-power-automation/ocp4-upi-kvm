@@ -34,6 +34,8 @@ locals {
         storage_type            = var.storage_type
         log_level               = var.log_level
         release_image_override  = var.release_image_override
+        chrony_config           = var.chrony_config
+        chrony_config_servers   = var.chrony_config_servers
     }
 
     upgrade_vars = {

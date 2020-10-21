@@ -113,6 +113,8 @@ module "helpernode" {
     cluster_domain                  = var.cluster_domain
     cluster_id                      = local.cluster_id
     dns_forwarders                  = var.dns_forwarders
+    chrony_config                   = var.chrony_config
+    chrony_config_servers           = var.chrony_config_servers
     gateway_ip                      = cidrhost(var.network_cidr,1)
     cidr                            = var.network_cidr
     allocation_pools                = [{"start": cidrhost(var.network_cidr,3), "end": cidrhost(var.network_cidr,-2)}]
@@ -164,6 +166,8 @@ module "install" {
     private_key                     = local.private_key
     ssh_agent                       = var.ssh_agent
     jump_host                       = var.host_address
+    chrony_config                   = var.chrony_config
+    chrony_config_servers           = var.chrony_config_servers
     bootstrap_ip                    = local.bootstrap.ip
     master_ips                      = null_resource.master_info.*.triggers.ip
     worker_ips                      = null_resource.worker_info.*.triggers.ip

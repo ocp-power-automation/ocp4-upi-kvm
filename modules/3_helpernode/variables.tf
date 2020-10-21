@@ -26,6 +26,8 @@ variable "cluster_id" {
 }
 
 variable "dns_forwarders" {}
+variable "chrony_config" {}
+variable "chrony_config_servers" {}
 variable "gateway_ip" {}
 variable "cidr" {}
 variable "allocation_pools" {}

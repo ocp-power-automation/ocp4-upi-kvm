@@ -32,7 +32,10 @@ locals {
         pool            = var.allocation_pools[0]
         forwarder1      = local.forwarders[0]
         forwarder2      = length(local.forwarders) > 1 ? join(";", slice(local.forwarders, 1, length(local.forwarders))) : ""
-	
+
+        chrony_config         = var.chrony_config
+        chrony_config_servers = var.chrony_config_servers
+
         bootstrap_info  = {
             ip = var.bootstrap_ip,
             mac = var.bootstrap_mac,
