@@ -59,6 +59,10 @@ locals {
         client_tarball  = var.openshift_client_tarball
         install_tarball = var.openshift_install_tarball
     }
+
+    helpernode_inventory = {
+        bastion_ip      = var.bastion_ip
+    }
 }
 
 resource "null_resource" "config" {
@@ -80,6 +84,12 @@ resource "null_resource" "config" {
             "cd ocp4-helpernode && git checkout ${var.helpernode_tag}"
         ]
     }
+
+    provisioner "file" {
+        content     = templatefile("${path.module}/templates/helpernode_inventory", local.helpernode_inventory)
+        destination = "~/ocp4-helpernode/inventory"
+    }
+
     provisioner "file" {
         content     = templatefile("${path.module}/templates/helpernode_vars.yaml", local.helpernode_vars)
         destination = "~/ocp4-helpernode/helpernode_vars.yaml"
