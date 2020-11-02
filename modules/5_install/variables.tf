@@ -53,3 +53,7 @@ variable "upgrade_version" {}
 variable "upgrade_channel" {}
 variable "upgrade_pause_time" {}
 variable "upgrade_delay_time" {}
+
+variable "enable_local_registry" {}
+variable "local_registry_image" {}
+variable "ocp_release_tag" {}

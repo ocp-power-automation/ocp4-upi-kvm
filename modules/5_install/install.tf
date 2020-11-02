@@ -19,6 +19,13 @@
 ################################################################
 
 locals {
+    local_registry  = {
+        enable_local_registry   = var.enable_local_registry
+        registry_image          = var.local_registry_image
+        ocp_release_repo        = "ocp4/openshift4"
+        ocp_release_tag         = var.ocp_release_tag
+    }
+
     inventory = {
         bastion_ip      = var.bastion_ip
         bootstrap_ip    = var.bootstrap_ip
@@ -26,14 +33,17 @@ locals {
         worker_ips      = var.worker_ips
     }
 
+    local_registry_ocp_image = "registry.${var.cluster_id}.${var.cluster_domain}:5000/${local.local_registry.ocp_release_repo}:${var.ocp_release_tag}"
+
     install_vars = {
         cluster_id              = var.cluster_id
         cluster_domain          = var.cluster_domain
         pull_secret             = var.pull_secret
         public_ssh_key          = var.public_key
         storage_type            = var.storage_type
+        enable_local_registry   = var.enable_local_registry
+        release_image_override  = var.enable_local_registry ? "${local.local_registry_ocp_image}" : var.release_image_override
         log_level               = var.log_level
-        release_image_override  = var.release_image_override
         chrony_config           = var.chrony_config
         chrony_config_servers   = var.chrony_config_servers
     }
