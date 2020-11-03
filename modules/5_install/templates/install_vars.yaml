@@ -18,3 +18,5 @@ chronyconfig:
       options: ${lookup(item, "options", "iburst")}
 %{ endfor ~}
 %{ endif ~}
+powervm_rmc: false
+
