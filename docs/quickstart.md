@@ -44,7 +44,7 @@ Update the following variables specific to your cluster requirement. All the var
     * `memory` : Memory in MBs required for master nodes.
     * `vcpu` : Number of VCPUs to use for master  nodes.
     * `count` : Number of master nodes.
- * `worker` : Map of below parameters for worker hosts. (Atleaset 2 Workers are required for running router pods in HA mode)
+ * `worker` : Map of below parameters for worker hosts.
     * `memory` : Memory in MBs required for worker nodes.
     * `vcpu` : Number of VCPUs to use for worker nodes.
     * `count` : Number of worker nodes.
