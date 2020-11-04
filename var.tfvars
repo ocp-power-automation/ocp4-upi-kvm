@@ -50,3 +50,9 @@ volume_size                 = "300" # Value in GB
 #upgrade_channel = ""  #(stable-4.x, fast-4.x, candidate-4.x) eg. stable-4.5
 #upgrade_pause_time = "90"
 #upgrade_delay_time = "600"
+
+### Local registry variables
+enable_local_registry = false  #Set to true to enable usage of the local registry for restricted network install.
+
+#local_registry_image = "docker.io/ibmcom/registry-ppc64le:2.6.2.5"
+#ocp_release_tag      = "4.6.1-ppc64le"

@@ -259,3 +259,22 @@ variable "upgrade_delay_time" {
     description = "Number of seconds to wait before re-checking the upgrade status once the playbook execution resumes."
     default = "600"
 }
+
+################################################################
+# Local registry variables ( used only in disconnected install )
+################################################################
+variable "enable_local_registry" {
+    description = "Set to true to enable usage of local registry for restricted network install."
+    type = bool
+    default = false
+}
+
+variable "local_registry_image" {
+    description = "Name of the image used for creating the local registry container."
+    default = "docker.io/ibmcom/registry-ppc64le:2.6.2.5"
+}
+
+variable "ocp_release_tag" {
+    description = "The version of OpenShift you want to sync."
+    default = "4.6.1-ppc64le"
+}

@@ -52,3 +52,7 @@ variable "openshift_install_tarball" {}
 variable "helpernode_tag" {}
 
 variable "ansible_extra_options" {}
+
+variable "enable_local_registry" {}
+variable "local_registry_image" {}
+variable "ocp_release_tag" {}

@@ -20,3 +20,4 @@ chronyconfig:
 %{ endif ~}
 powervm_rmc: false
 
+enable_local_registry: ${enable_local_registry}
