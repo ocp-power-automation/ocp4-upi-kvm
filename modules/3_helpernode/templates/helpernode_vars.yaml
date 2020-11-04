@@ -36,13 +36,13 @@ workers:
 %{ endfor ~}
 chronyconfig:
   enabled: ${chrony_config}
-%{ if chrony_config_servers != [] ~}
   content:
 %{ for item in chrony_config_servers ~}
     - server: ${item.server}
       options: ${lookup(item, "options", "iburst")}
 %{ endfor ~}
-%{ endif ~}
+    - server: "${bastion_ip}"
+      options: iburst
 
 ppc64le: true
 ssh_gen_key: false
