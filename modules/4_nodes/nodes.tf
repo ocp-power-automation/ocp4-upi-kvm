@@ -128,11 +128,18 @@ resource "libvirt_ignition" "worker" {
     pool        = var.storage_pool_name
 }
 
+resource "random_string" "vm-name-suffix" {
+    length  = 6
+    upper   = false
+    number  = false
+    lower   = true
+    special = false
+}
 
 # domains
 resource "libvirt_domain" "bootstrap" {
     count   = var.bootstrap["count"] == 0 ? 0 : 1
-    name    = "${var.cluster_id}-bootstrap"
+    name    = "${var.cluster_id}-bootstrap-${random_string.vm-name-suffix.result}"
     memory  = var.bootstrap.memory
     vcpu    = var.bootstrap.vcpu
 
@@ -157,7 +164,7 @@ resource "libvirt_domain" "bootstrap" {
 
 resource "libvirt_domain" "master" {
     count   = var.master["count"]
-    name    = "${var.cluster_id}-master-${count.index}"
+    name    = "${var.cluster_id}-master-${count.index}-${random_string.vm-name-suffix.result}"
     memory  = var.master.memory
     vcpu    = var.master.vcpu
 
@@ -182,7 +189,7 @@ resource "libvirt_domain" "master" {
 
 resource "libvirt_domain" "worker" {
     count   = var.worker["count"]
-    name    = "${var.cluster_id}-worker-${count.index}"
+    name    = "${var.cluster_id}-worker-${count.index}-${random_string.vm-name-suffix.result}"
     memory  = var.worker.memory
     vcpu    = var.worker.vcpu
 
