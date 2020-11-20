@@ -1,6 +1,6 @@
 # Terraform Providers
 
-At present Terraform registry does not support some plugins. Third-party providers can be manually installed using [local filesystem as a mirror](https://www.terraform.io/docs/commands/cli-config.html#filesystem_mirror). This is in additon to the provider plugins that are downloaded by Terraform during `terraform init`.
+At present Terraform registry does not support some plugins. Third-party providers can be manually installed using [local filesystem as a mirror](https://www.terraform.io/docs/commands/cli-config.html#filesystem_mirror). This is in addition to the provider plugins that are downloaded by Terraform during `terraform init`.
 
 Follow below steps based on your Terraform client machine to setup terraform providers. These steps are required to be followed before running the automation.
 
@@ -46,21 +46,6 @@ https://github.com/ocp-power-automation/ocp4-upi-kvm/blob/master/docs/quickstart
 
 
 ## On IBM Power Systems
-
-**Terraform** binary on IBM Power is not available for download. You will need to install it from source by running:
-
-```
-TAG_VERSION=v0.13.2
-git clone https://github.com/hashicorp/terraform --branch $TAG $GOPATH/src/github.com/hashicorp/terraform
-cd $GOPATH/src/github.com/hashicorp/terraform
-TF_DEV=1 scripts/build.sh
-```
-
-Validate using:
-```
-$GOPATH/bin/terraform version
-```
-
 
 Identify your platform. All example commands assume Linux as a platform:
 

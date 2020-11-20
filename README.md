@@ -1,50 +1,43 @@
 # **Table of Contents**
 
+- [**Table of Contents**](#table-of-contents)
 - [Introduction](#introduction)
-- [Pre-requisites](#pre-requisites)
-- [Image and VM requirements](#image-and-vm-requirements)
-- [OCP Install](#ocp-install)
-- [Contributing](#contributing)
+  - [Automation Host Prerequisites](#automation-host-prerequisites)
+  - [Libvirt Prerequisites](#libvirt-prerequisites)
+  - [OCP Install](#ocp-install)
+  - [Contributing](#contributing)
 
 
 # Introduction
-This repo contains Terraform templates to help deployment of OpenShift Container Platform (OCP) 4.x on KVM VMs using
-libvirt.
 
-This project leverages the [following ansible playbook](https://github.com/RedHatOfficial/ocp4-helpernode) to setup
+The `ocp4-upi-kvm` [project](https://github.com/ocp-power-automation/ocp4-upi-kvm) provides Terraform based automation code to help the deployment of OpenShift Container Platform (OCP) 4.x on KVM VMs using libvirt.
+
+This project leverages the [following ansible playbook](https://github.com/RedHatOfficial/ocp4-helpernode) to setup a
 helper node (bastion) for OCP deployment.
 
-Run this code from either Mac or Linux (Intel) system.
 
-:heavy_exclamation_mark: *This automation is intended for test/development purposes only and there is no formal support. For issues please open a GitHub issue*
+:heavy_exclamation_mark: *For bugs/enhancement requests etc. please open a GitHub [issue](https://github.com/ocp-power-automation/ocp4-upi-kvm/issues)*
 
-# Pre-requisites
-- **Git**: Please refer to the following [link](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for instructions
-on installing `git` for Linux and Mac.
-- **Terraform >= 0.13**: Please refer to the following [link](https://learn.hashicorp.com/terraform/getting-started/install.html) for instructions on installing `terraform` for Linux and Mac. For validating the version run `terraform version` command after install.
-- **Terraform Providers**: Please ensure terraform providers are built and installed on Terraform Client Machine. You can follow the [Build Terraform Providers](docs/terraform-provider-build.md) guide.
-- **libvirt**: Please ensure `libvirt` is installed and configured on the KVM host. You can follow the [Libvirt Host setup](docs/libvirt-host-setup.md) guide.
+:information_source: **The [main](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/master) branch must be used with latest OCP pre-release versions only. For stable releases please checkout specific release branches -
+{[release-4.5](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.5), [release-4.6](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.6) ...} and follow the docs in the specific release branches.**
+
+## Automation Host Prerequisites
+
+The automation needs to run from a system with internet access. This could be your laptop or a VM with public internet connectivity. This automation code has been tested on the following 64-bit Operating Systems:
+- Linux (**preferred**)
+- Mac OSX (Darwin)
 
 
-# Image and VM requirements
+Follow the [guide](docs/automation_host_prereqs.md) to complete the prerequisites.
 
-For information on how to configure the images required for the automation see [Preparing Images for Power](docs/prepare-images.md).
+## Libvirt Prerequisites
 
-Following are the recommended VM configs for OpenShift nodes that will be deployed with RHCOS image.
-- Bootstrap, Master - 4 vCPUs, 16GB RAM, 120 GB Disk
+Follow the [guide](docs/libvirt-host-setup.md) to complete the Libvirt prerequisites.
+## OCP Install
 
-   **_This config is suitable for majority of the scenarios_**
-- Worker - 4 vCPUs, 16GB RAM, 120 GB Disk
+Follow the [quickstart](docs/quickstart.md) guide for OCP installation on KVM using libvirt.
 
-   **_Increase worker vCPUs, RAM and Disk based on application requirements_**
+## Contributing
 
-Following is the recommended VM config for the helper node that will be deployed with RHEL 8.0 (or later) image.
-- Helper node (bastion) - 2vCPUs, 16GB RAM, 200 GB Disk
-
-# OCP Install
-
-Follow these [quickstart](docs/quickstart.md) steps to kickstart OCP installation on Power KVM using libvirt.
-
-# Contributing
 Please see the [contributing doc](https://github.com/ocp-power-automation/ocp4-upi-kvm/blob/master/CONTRIBUTING.md) for more details.
 PRs are most welcome !!
