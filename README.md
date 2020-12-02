@@ -15,11 +15,11 @@ The `ocp4-upi-kvm` [project](https://github.com/ocp-power-automation/ocp4-upi-kv
 This project leverages the [following ansible playbook](https://github.com/RedHatOfficial/ocp4-helpernode) to setup a
 helper node (bastion) for OCP deployment.
 
+!!! Note
+        For bugs/enhancement requests etc. please open a GitHub [issue](https://github.com/ocp-power-automation/ocp4-upi-kvm/issues)
 
-:heavy_exclamation_mark: *For bugs/enhancement requests etc. please open a GitHub [issue](https://github.com/ocp-power-automation/ocp4-upi-kvm/issues)*
-
-:information_source: **The [main](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/master) branch must be used with latest OCP pre-release versions only. For stable releases please checkout specific release branches -
-{[release-4.5](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.5), [release-4.6](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.6) ...} and follow the docs in the specific release branches.**
+!!! Warning
+          **The [main](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/master) branch must be used with latest OCP pre-release versions only. For stable releases please checkout specific release branches -{[release-4.5](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.5), [release-4.6](https://github.com/ocp-power-automation/ocp4-upi-kvm/tree/release-4.6) ...} and follow the docs in the specific release branches.**
 
 ## Automation Host Prerequisites
 
@@ -39,5 +39,5 @@ Follow the [quickstart](docs/quickstart.md) guide for OCP installation on KVM us
 
 ## Contributing
 
-Please see the [contributing doc](https://github.com/ocp-power-automation/ocp4-upi-kvm/blob/master/CONTRIBUTING.md) for more details.
+Please see the [contributing doc](CONTRIBUTING.md) for more details.
 PRs are most welcome !!
