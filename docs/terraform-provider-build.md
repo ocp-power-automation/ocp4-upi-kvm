@@ -127,8 +127,8 @@ make build
 cd -
 
 # Create plugin directory and copy the binary
-mkdir -p $PLUGIN_PATH/registry.terraform.io/terraform-providers/ignition/$VERSION/$PLATFORM/
-cp $GOPATH/bin/terraform-provider-ignition $PLUGIN_PATH/registry.terraform.io/terraform-providers/ignition/$VERSION/$PLATFORM/terraform-provider-ignition
+mkdir -p $PLUGIN_PATH/registry.terraform.io/community-terraform-providers/ignition/$VERSION/$PLATFORM/
+cp $GOPATH/bin/terraform-provider-ignition $PLUGIN_PATH/registry.terraform.io/community-terraform-providers/ignition/$VERSION/$PLATFORM/terraform-provider-ignition
 ```
 
 
