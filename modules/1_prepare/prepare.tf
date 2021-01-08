@@ -157,7 +157,7 @@ EOF
         inline = [
             "#sudo dnf update -y --skip-broken",
             "sudo dnf install -y wget jq git net-tools bind-utils vim python3 python3-devel httpd tar",
-            "sudo dnf install -y openssl-devel libffi-devel"
+            "sudo dnf install -y openssl-devel libffi-devel gcc"
         ]
     }
     provisioner "remote-exec" {
