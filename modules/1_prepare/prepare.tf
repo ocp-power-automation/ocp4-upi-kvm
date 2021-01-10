@@ -154,6 +154,18 @@ EOF
     }
 
     provisioner "remote-exec" {
+        inline = [<<EOF
+if [ '${var.rhel_subscription_username}' != '' ] || [ '${var.rhel_subscription_org}' != '' ]
+then
+    sudo subscription-manager repos --enable ${var.ansible_repo_name}
+else
+    sudo yum install -y epel-release
+fi
+EOF
+        ]
+    }
+
+    provisioner "remote-exec" {
         inline = [
             "#sudo dnf update -y --skip-broken",
             "sudo dnf install -y wget jq git net-tools bind-utils vim python3 python3-devel httpd tar",
@@ -162,7 +174,7 @@ EOF
     }
     provisioner "remote-exec" {
         inline = [
-            "sudo pip3 install ansible -q"
+            "sudo yum install -y ansible"
         ]
     }
 }
