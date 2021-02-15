@@ -173,6 +173,11 @@ variable "ansible_extra_options" {
     default     = "-v"
 }
 
+variable "rhcos_kernel_options" {
+    description = "List of kernel arguments for the cluster nodes"
+    default     = []
+}
+
 variable "ansible_repo_name" {
     default = "ansible-2.9-for-rhel-8-ppc64le-rpms"
 }

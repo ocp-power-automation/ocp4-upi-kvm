@@ -49,6 +49,8 @@ variable "log_level" {}
 
 variable "ansible_extra_options" {}
 
+variable "rhcos_kernel_options" {}
+
 variable "upgrade_version" {}
 variable "upgrade_channel" {}
 variable "upgrade_pause_time" {}

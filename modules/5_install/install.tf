@@ -44,6 +44,7 @@ locals {
         enable_local_registry   = var.enable_local_registry
         release_image_override  = var.enable_local_registry ? "${local.local_registry_ocp_image}" : var.release_image_override
         log_level               = var.log_level
+        rhcos_kernel_options    = var.rhcos_kernel_options
         chrony_config           = var.chrony_config
         chrony_config_servers   = var.chrony_config_servers
     }
