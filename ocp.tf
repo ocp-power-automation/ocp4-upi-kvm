@@ -185,6 +185,7 @@ module "install" {
     install_playbook_tag            = var.install_playbook_tag
     log_level                       = var.installer_log_level
     ansible_extra_options           = var.ansible_extra_options
+    rhcos_kernel_options            = var.rhcos_kernel_options
     upgrade_version                 = var.upgrade_version
     upgrade_channel                 = var.upgrade_channel
     upgrade_pause_time              = var.upgrade_pause_time

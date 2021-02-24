@@ -144,6 +144,16 @@ This variable specifies the external DNS servers to forward DNS queries that can
 dns_forwarders                     = "1.1.1.1; 9.9.9.9"
 ```
 
+List of [kernel arguments](https://docs.openshift.com/container-platform/4.6/nodes/nodes/nodes-nodes-working.html#nodes-nodes-kernel-arguments_nodes-nodes-working) for the cluster nodes.
+Note that this will be applied after the cluster is installed and all the nodes are in `Ready` status.
+```
+rhcos_kernel_options        = []
+```
+- Example 1
+  ```
+  rhcos_kernel_options      = ["slub_max_order=0","loglevel=7"]
+  ```
+
 These are NTP specific variables that are used for time-synchronization in the OpenShift cluster.
 ```
 chrony_config                      = true
