@@ -136,6 +136,7 @@ module "helpernode" {
     local_registry_image            = var.local_registry_image
     ocp_release_tag                 = var.ocp_release_tag
     ansible_extra_options           = var.ansible_extra_options
+    pull_secret                     = file(coalesce(var.pull_secret_file, "/dev/null"))
 }
 
 module "nodes" {
