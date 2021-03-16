@@ -56,3 +56,5 @@ variable "ansible_extra_options" {}
 variable "enable_local_registry" {}
 variable "local_registry_image" {}
 variable "ocp_release_tag" {}
+
+variable "pull_secret" {}
