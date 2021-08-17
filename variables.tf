@@ -159,13 +159,13 @@ variable "installer_log_level" {
 variable "helpernode_tag" {
     description = "Set the branch/tag name or commit# for using ocp4-helpernode repo"
     # Checkout level for https://github.com/RedHatOfficial/ocp4-helpernode which is used for setting up services required on bastion node
-    default = "dd8a0767c677fc862e45b6d70e5d04656ced5d28"
+    default = "324e09e3d303101874f540730c993cd986ddbc04"
 }
 
 variable "install_playbook_tag" {
     description = "Set the branch/tag name or commit# for using ocp4-playbooks repo"
     # Checkout level for https://github.com/ocp-power-automation/ocp4-playbooks which is used for running ocp4 installations steps
-    default = "c6e6038dba0856e621697c876bd3a65927f46166"
+    default = "64fd5edadf380820f71e44bb6bca93e9b083fe5c"
 }
 
 variable "ansible_extra_options" {
